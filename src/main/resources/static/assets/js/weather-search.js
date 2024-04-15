@@ -11,7 +11,7 @@ document.getElementById('send-btn').onclick = () => {
     console.log(value2);
 
     // fetch(`/weather/\${value1}/\${value2}`);
-    fetch('/weather/'+ value1 +'/' + value2)
+    fetch('/weather/' + value1 + '/' + value2)
         .then(res => res.json())
         .then(weatherInfo => {
             console.log(weatherInfo);
@@ -56,15 +56,33 @@ document.getElementById('send-btn').onclick = () => {
                         <h2>오늘의 패션 예보</h2>
                     </div>
                     <div class="right-down">
-                        <img src="/assets/img/clothes-image/${styleImage}" alt="clothes">
+                        <img id="clothes-img" alt="clothes">
                     </div>
                 </div>
                 `;
 
         document.querySelector('.top-section').innerHTML = tag;
+        changeBackGround(styleImage);
     }
+
+    let idx = 0; // 파일명을 담은 배열의 인덱스를 지목하기 위한 변수
+
+    function changeBackGround(styleImage) {
+
+        const picList = [2, 1, 0]; // 이미지 파일명을 담아놓은 변수.
+        const $img= document.getElementById('clothes-img'); // img 태그 지목
+        $img.setAttribute("src", `/assets/img/clothes-image/range_code_${styleImage}/${styleImage}-${picList[idx]}-female.jpg`);
+        console.log("/assets/img/clothes-image/range_code_${styleImage}/${styleImage}-${picList[idx]}-female.jpg");
+        idx++; // 인덱스 하나 올리기
+
+        if(idx === picList.length) { // 인덱스가 끝까지 도달했다면 0으로 되돌리자.
+            idx = 0;
+        }
+    }
+
 }
 
+// 지역 선택 시 드롭다운 옵션 변경
 var cat1_num = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 var cat1_name = new Array('서울', '부산', '대구', '인천', '광주', '대전', '울산', '강원', '경기', '경남', '경북', '전남', '전북', '제주',
     '충남', '충북');
@@ -119,6 +137,7 @@ cat2_name[15] = new Array('공주시', '논산시', '보령시', '서산시', '�
     '청양군', '태안군', '홍성군');
 cat2_num[16] = new Array(249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260);
 cat2_name[16] = new Array('제천시', '청주시 상당구', '청주시 흥덕구', '충주시', '괴산군', '단양군', '보은군', '영동군', '옥천군', '음성군', '진천군');
+
 function cat1_change(key, sel) {
     if (key == '') return;
     var name = cat2_name[key];
