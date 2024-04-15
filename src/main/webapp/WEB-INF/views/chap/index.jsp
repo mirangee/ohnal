@@ -32,7 +32,7 @@
                     <h2>오늘의 패션 예보</h2>
                 </div>
                 <div class="right-down">
-                    <img src="./assets/img/cody.png" alt="test">
+                    <img src="/assets/img/clothes-image/${dto.styleImage}" alt="clothes">
                 </div>
             </div>
         </div>

@@ -207,43 +207,76 @@ public class WeatherService {
 //        log.info("일교차: {}", temparatureDiff);
 
         String clothesInfo = ""; // 옷 정보 담는 변수
+        String clothesCode = ""; // 코드 번호 담는 변수
 
         // 평균 기온 구해서 반올림 적용
         int averageTemperature = (int) Math.round((tmx + tmn) / 2);
         log.info("average temparature: {}", averageTemperature);
 
         // 기온에 따라 옷 맵핑하기
-        if (averageTemperature >= 28) {
-            log.info("민소매, 반팔, 반바지, 치마");
-            clothesInfo = "/range_code_9/9-0-female";
-        } else if (averageTemperature >= 23) {
-            log.info("반팔, 얇은 셔츠, 반바지, 면바지");
-            clothesInfo = "/range_code_8/8-0-female";
-        } else if (averageTemperature >= 20) {
-            log.info("얇은 가디건, 긴팔티, 면바지, 청바지");
-            clothesInfo = "/range_code_7/7-0-female";
-        } else if (averageTemperature >= 17) {
-            log.info("얇은 니트, 가디건, 맨투맨, 얇은 재킷, 면바지, 청바지");
-            clothesInfo = "/range_code_6/6-0-female";
-        } else if (averageTemperature >= 12) {
-            log.info("재킷, 가디건, 야상, 맨투맨, 니트, 스타킹, 청바지, 면바지");
-            clothesInfo = "/range_code_5/5-0-female";
-        } else if (averageTemperature >= 9) {
-            log.info("재킷, 트렌치코드, 야상, 니트, 스타킹, 청바지, 면바지, 겉옷 안에 가디건 필수");
-            clothesInfo = "/range_code_4/4-0-female";
-        } else if (averageTemperature >= 5) {
-            log.info("코트, 히트텍, 니트, 청바지, 레깅스, 반드시 겹쳐 입을 것");
-            clothesInfo = "/range_code_3/3-0-female";
-        } else if (averageTemperature >= 0) {
-            log.info("패딩, 두꺼운 코트, 목도리, 기모제품, 최대한 많이 껴입자");
-            clothesInfo = "/range_code_2/2-0-female";
-        } else if (averageTemperature >= -5) {
-            log.info("모자 달린 두꺼운 패딩, 안에는 스웨터, 귀마개, 부츠 등 방한 제품");
-            clothesInfo = "/range_code_1/1-0-female";
-        } else {
-            log.info("파카 코트 등 방한 아웃도어 제품");
-            clothesInfo = "/range_code_0/0-0-female";
-        }
-        return clothesInfo + ".jpg";
+//        if (averageTemperature >= 28) {
+//            log.info("민소매, 반팔, 반바지, 치마");
+//            clothesCode= "9";
+//        } else if (averageTemperature >= 23) {
+//            log.info("반팔, 얇은 셔츠, 반바지, 면바지");
+//            clothesCode= "8";
+//        } else if (averageTemperature >= 20) {
+//            log.info("얇은 가디건, 긴팔티, 면바지, 청바지");
+//            clothesCode= "7";
+//        } else if (averageTemperature >= 17) {
+//            log.info("얇은 니트, 가디건, 맨투맨, 얇은 재킷, 면바지, 청바지");
+//            clothesCode= "6";
+//        } else if (averageTemperature >= 12) {
+//            log.info("재킷, 가디건, 야상, 맨투맨, 니트, 스타킹, 청바지, 면바지");
+//            clothesCode= "5";
+//        } else if (averageTemperature >= 9) {
+//            log.info("재킷, 트렌치코드, 야상, 니트, 스타킹, 청바지, 면바지, 겉옷 안에 가디건 필수");
+//            clothesCode= "4";
+//        } else if (averageTemperature >= 5) {
+//            log.info("코트, 히트텍, 니트, 청바지, 레깅스, 반드시 겹쳐 입을 것");
+//            clothesCode= "3";
+//        } else if (averageTemperature >= 0) {
+//            log.info("패딩, 두꺼운 코트, 목도리, 기모제품, 최대한 많이 껴입자");
+//            clothesCode= "2";
+//        } else if (averageTemperature >= -5) {
+//            log.info("모자 달린 두꺼운 패딩, 안에는 스웨터, 귀마개, 부츠 등 방한 제품");
+//            clothesCode= "1";
+//        } else {
+//            log.info("파카 코트 등 방한 아웃도어 제품");
+//            clothesCode= "0";
+//        }
+
+            if (averageTemperature >= 28) {
+                log.info("민소매, 반팔, 반바지, 치마");
+                clothesInfo = "/range_code_9/9-0-female";
+            } else if (averageTemperature >= 23) {
+                log.info("반팔, 얇은 셔츠, 반바지, 면바지");
+                clothesInfo = "/range_code_8/8-0-female";
+            } else if (averageTemperature >= 20) {
+                log.info("얇은 가디건, 긴팔티, 면바지, 청바지");
+                clothesInfo = "/range_code_7/7-0-female";
+            } else if (averageTemperature >= 17) {
+                log.info("얇은 니트, 가디건, 맨투맨, 얇은 재킷, 면바지, 청바지");
+                clothesInfo = "/range_code_6/6-0-female";
+            } else if (averageTemperature >= 12) {
+                log.info("재킷, 가디건, 야상, 맨투맨, 니트, 스타킹, 청바지, 면바지");
+                clothesInfo = "/range_code_5/5-0-female";
+            } else if (averageTemperature >= 9) {
+                log.info("재킷, 트렌치코드, 야상, 니트, 스타킹, 청바지, 면바지, 겉옷 안에 가디건 필수");
+                clothesInfo = "/range_code_4/4-0-female";
+            } else if (averageTemperature >= 5) {
+                log.info("코트, 히트텍, 니트, 청바지, 레깅스, 반드시 겹쳐 입을 것");
+                clothesInfo = "/range_code_3/3-0-female";
+            } else if (averageTemperature >= 0) {
+                log.info("패딩, 두꺼운 코트, 목도리, 기모제품, 최대한 많이 껴입자");
+                clothesInfo = "/range_code_2/2-0-female";
+            } else if (averageTemperature >= -5) {
+                log.info("모자 달린 두꺼운 패딩, 안에는 스웨터, 귀마개, 부츠 등 방한 제품");
+                clothesInfo = "/range_code_1/1-0-female";
+            } else {
+                log.info("파카 코트 등 방한 아웃도어 제품");
+                clothesInfo = "/range_code_0/0-0-female";
+            }
+            return clothesInfo + ".jpg";
     }
 }
