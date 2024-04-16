@@ -71,8 +71,7 @@ document.getElementById('send-btn').onclick = () => {
 
         const picList = [2, 1, 0]; // 이미지 파일명을 담아놓은 변수.
         const $img= document.getElementById('clothes-img'); // img 태그 지목
-        $img.setAttribute("src", `/assets/img/clothes-image/range_code_${styleImage}/${styleImage}-${picList[idx]}-female.jpg`);
-        console.log("/assets/img/clothes-image/range_code_${styleImage}/${styleImage}-${picList[idx]}-female.jpg");
+        $img.setAttribute("src", `/assets/img/clothes-image/range_code_${styleImage}/${styleImage}-${picList[idx]}-female.png`);
         idx++; // 인덱스 하나 올리기
 
         if(idx === picList.length) { // 인덱스가 끝까지 도달했다면 0으로 되돌리자.

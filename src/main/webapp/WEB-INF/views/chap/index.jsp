@@ -33,7 +33,7 @@
                 </div>
                 <div class="right-down">
 <%--                    <img src="/assets/img/clothes-image/${dto.styleImage}" alt="clothes">--%>
-                        <img id = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-0-male.jpg">
+                        <img id = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-0-male.png">
                 </div>
 
             </div>
