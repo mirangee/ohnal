@@ -97,7 +97,7 @@ public class WeatherService {
 
             // body에서 items를 꺼내세요.
             JSONObject items = (JSONObject) body.get("items");
-            log.info("items: {}", items);
+//            log.info("items: {}", items);
 
             // item이라는 키를 가진 JSON 데이터를 가져올건데,
             // item 데이터는 여러 값이기 때문에 배열의 문법을 제공하는 객체로 받습니다.
