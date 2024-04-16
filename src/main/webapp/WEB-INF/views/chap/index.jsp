@@ -229,17 +229,5 @@
 
     <%@include file="../include/footer.jsp"%>
 
-    <script>
-        // 사용자의 위치를 (자동으로) 가져오기
-        
-        // 사용자의 위치(위도, 경도)를 가져올 변수 선언 및 초기화
-        
-
-
-
-
-
-
-    </script>
 </body>
 </html>
