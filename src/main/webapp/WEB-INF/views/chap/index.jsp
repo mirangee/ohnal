@@ -272,10 +272,10 @@
             console.log(fail);
         }
 
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            console.log(pos);
-            var latitude = pos.coords.latitude;
-            var longitude = pos.coords.longitude;
+        navigator.geolocation.getCurrentPosition(function(permitPosition) {
+            console.log(permit);
+            var latitude = permitPosition.coords.latitude; // 위도
+            var longitude = permitPosition.coords.longitude; // 경도
             console.log("현재 위치는 : " + latitude + ", "+ longitude);
         });
 
