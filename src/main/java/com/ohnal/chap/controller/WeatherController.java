@@ -38,7 +38,7 @@ public class WeatherController {
         model.addAttribute("maxInt", maxInt);
         model.addAttribute("minInt", minInt);
 
-        return "chap/index";    
+        return "chap/index";
     }
 
 

@@ -3,9 +3,12 @@
 <html>
 
 <head>
-    <title>Today weather, oh-nal</title>
+    <title>Today's weather, oh-nal</title>
     <%@include file="../include/static-head.jsp"%>
-    <!-- page css -->
+    <!-- favicon-->
+    <link rel="shortcut icon" href="/assets/img/ohnal_favicon.png">
+
+    <!-- index page css -->
     <link rel="stylesheet" href="/assets/css/main.css">
     <!-- weather search event js -->
     <script src="/assets/js/weather-search.js" defer></script>
