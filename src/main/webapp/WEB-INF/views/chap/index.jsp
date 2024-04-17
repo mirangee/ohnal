@@ -47,10 +47,19 @@
                                 <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-0-male.png">
                         </div>
                         <div class="right-down swiper-slide" data-swiper-autoplay="3000">
+                            <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-0-female.png">
+                        </div>
+                        <div class="right-down swiper-slide" data-swiper-autoplay="3000">
                             <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-1-male.png">
                         </div>
                         <div class="right-down swiper-slide" data-swiper-autoplay="3000">
+                            <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-1-female.png">
+                        </div>
+                        <div class="right-down swiper-slide" data-swiper-autoplay="3000">
                             <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-2-male.png">
+                        </div>
+                        <div class="right-down swiper-slide" data-swiper-autoplay="3000">
+                            <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-2-female.png">
                         </div>
                     </div>
                     <!-- If we need pagination -->
