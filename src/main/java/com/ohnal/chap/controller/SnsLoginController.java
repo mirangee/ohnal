@@ -41,8 +41,9 @@ public class SnsLoginController {
         params.put("code",code);
 
         snsLoginService.kakaoLogin(params, session);
+        String uri = "http://localhost:8282/index";
 
-        return "redirect:/";
+        return "redirect:" + uri;
     }
 
 }

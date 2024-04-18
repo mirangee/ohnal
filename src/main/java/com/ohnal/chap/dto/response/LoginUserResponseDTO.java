@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 public class LoginUserResponseDTO {
    private String account;
-   private String name;
+   private String nickname;
    private String email;
    private String auth;
    private String profile;

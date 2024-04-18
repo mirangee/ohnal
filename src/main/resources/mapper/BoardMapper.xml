@@ -11,6 +11,8 @@
         LIMIT #{pageStart}, #{amount}
     </select>
 
+
+
     <select id="getCount" resultType="int">
         SELECT COUNT(*)
         FROM tbl_board

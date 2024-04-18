@@ -21,7 +21,7 @@ public class SignUpRequestDTO {
     @NotBlank
     private  String password;
     @NotBlank
-    private  String name;
+    private  String nickname;
 
     private MultipartFile profileImage;
     private Member.LoginMethod loginMethod;
@@ -30,11 +30,12 @@ public class SignUpRequestDTO {
         return Member.builder()
                 .email(email)
                 .password(encoder.encode(password))
-                .name(name)
+                .nickname(nickname)
                 .profileImage(savePath)
                 .loginMethod(loginMethod)
                 .build();
     }
+
 
 
 }

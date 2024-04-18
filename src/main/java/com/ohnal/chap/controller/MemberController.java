@@ -10,6 +10,7 @@ import com.ohnal.chap.service.MailSenderService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,7 +74,7 @@ public class MemberController {
                          HttpServletResponse response,
                          HttpServletRequest request
     ) {
-
+        log.info("/members/sign-in: async POST");
         // 자동 로그인 서비스를 추가하기 위해 세션과 응답객체도 함께 전달.
         LoginResult result = memberService.authenticate(dto, request.getSession(), response);
         log.info("result: {}", result);
@@ -92,7 +93,7 @@ public class MemberController {
             return "redirect:/index";
         }
 
-        return "redirect:/chap/sign-in"; // 로그인 실패 시
+        return "redirect:/members/sign-in"; // 로그인 실패 시
     }
 
     private void makeLoginCookie(LoginRequestDTO dto, HttpServletResponse response) {
@@ -121,6 +122,26 @@ public class MemberController {
     @GetMapping("/my-history")
     public String myHistory() {
         return "chap/my-history";
+    }
+
+    // 로그아웃 요청 처리
+    @GetMapping("/sign-out")
+    public String signOut(HttpSession session,
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
+        log.info("members/sign-out: Get");
+
+
+        // 로그아웃 처리 2가지 방법
+        // 로그인 정보 외에 다른 정보도 세션에 포함하고 있다면 1번 사용
+        // 세션 모든 정보를 초기화해도 된다면 2번 사용
+        // 1. 세션에서 로그인 정보 기록 삭제
+        session.removeAttribute("login");
+
+        // 2. 세션 전체 무효화(초기화)
+        session.invalidate();
+
+        return "redirect:/index";
     }
 
 }

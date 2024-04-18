@@ -46,25 +46,26 @@ public class MemberService {
                                     HttpSession session,
                                     HttpServletResponse response) {
 
+        log.info("LoginRequestDTO의 이메일 {}", dto.getEmail());
+        log.info("LoginRequestDTO의 비밀번호 {}", dto.getPassword());
         Member foundMember = memberMapper.findMember(dto.getEmail());
+        log.info(foundMember.toString());
 
         if (foundMember == null) { // 회원가입 안한 상태
             System.out.println(dto.getEmail() + "(은) 가입되지 않은 이메일 입니다.");
             return LoginResult.NO_EMAIL;
         }
 
-
         String inputPassword = dto.getPassword();
         String realPassword = foundMember.getPassword();
 
-
-
         if (!encoder.matches(inputPassword, realPassword)) {
+//        if (!(inputPassword.trim()).equals((realPassword).trim())) {
             System.out.println("비밀번호가 일치하지 않습니다.");
             return NO_PW;
         }
-    return null;
-     }
+    return LoginResult.SUCCESS;
+    }
 
     public boolean checkDuplicateValue (String type, String keyword ){
         return memberMapper.isDuplicate(type, keyword);
@@ -80,11 +81,12 @@ public class MemberService {
 
         // 현재 로그인한 회원의 모든 정보 조회
         Member foundMember =memberMapper.findMember(email);
+        log.info(foundMember.toString());
 
         // DB 데이터를 보여줄 것만 정제
         LoginUserResponseDTO dto = LoginUserResponseDTO.builder()
                 .email(foundMember.getEmail())
-                .name(foundMember.getName())
+                .nickname(foundMember.getNickname())
                 .profile(foundMember.getProfileImage())
                 .loginMethod(foundMember.getLoginMethod().toString())
                 .build();
