@@ -60,7 +60,6 @@ public class MemberService {
         String realPassword = foundMember.getPassword();
 
         if (!encoder.matches(inputPassword, realPassword)) {
-//        if (!(inputPassword.trim()).equals((realPassword).trim())) {
             System.out.println("비밀번호가 일치하지 않습니다.");
             return NO_PW;
         }
@@ -95,7 +94,6 @@ public class MemberService {
         session.setAttribute(LOGIN_KEY, dto);
         // 세션 수명 설정
         session.setMaxInactiveInterval(60 * 60); // 1시간
-
     }
 
     public void autoLoginClear(HttpServletRequest request, HttpServletResponse response) {

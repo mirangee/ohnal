@@ -35,7 +35,4 @@ public class SignUpRequestDTO {
                 .loginMethod(loginMethod)
                 .build();
     }
-
-
-
 }

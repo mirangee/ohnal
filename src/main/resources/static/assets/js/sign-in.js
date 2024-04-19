@@ -6,4 +6,4 @@
 //     if (event.target === autoblock) {
 //         event.preventDefault();
 //     }
-// }
+// };

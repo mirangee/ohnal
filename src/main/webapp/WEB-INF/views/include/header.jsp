@@ -9,25 +9,27 @@
                     <img src="/assets/img/navbar-logo.svg" alt="로고이미지">
                 </a>
             </h1>
-            <!-- 프로필 사진 -->
-            <div class="profile-box">
-<%--                <c:if test="${login == null || login.profile == null}">--%>
-<%--                    <img src="/assets/img/anonymous.jpg" alt="프사">--%>
-<%--                </c:if>--%>
-
-                <c:if test="${login != null && login.profile != null}">
+            <div class="profile-wrapper">
+                <!-- 프로필 사진과 nickname 노출-->
+                <c:if test="${login != null}">
                     <c:choose>
-                        <c:when test="${login.loginMethod == 'COMMON'}">
-                            <img src="/display${login.profile}" alt="프사">
-                            <p>${login.nickname}님, 안녕하세요!</p>
+                        <c:when test="${login.profile != null}">
+                            <div class="profile-box">
+                                <%-- 프사 경로 수정 필요--%>
+                                <img src="/display${login.profile}" alt="프사">
+                            </div>
+                            <p class="intro-text">${login.nickname}님, 안녕하세요!</p>
                         </c:when>
                         <c:otherwise>
-                            <img src="${login.profile}" alt="프사">
-                            <p>${login.nickname}님, 안녕하세요!</p>
+                            <div class="profile-box">
+                                <img src="/assets/img/anonymous-image.png" alt="프사">
+                            </div>
+                            <p class="intro-text">${login.nickname}님, 안녕하세요!</p>
                         </c:otherwise>
                     </c:choose>
                 </c:if>
             </div>
+
 
             <a href="#" class="menu-open">
                 <span class="lnr lnr-menu"></span>

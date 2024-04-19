@@ -6,7 +6,7 @@ import com.ohnal.chap.entity.Member;
 import com.ohnal.chap.service.LoginResult;
 import com.ohnal.chap.service.MemberService;
 import com.ohnal.util.FileUtils;
-import com.ohnal.chap.service.MailSenderService;
+//import com.ohnal.chap.service.MailSenderService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,7 +30,7 @@ public class MemberController {
 
 
     private final MemberService memberService;
-    private final MailSenderService mailsenderService;
+//    private final MailSenderService mailsenderService;
 
     @GetMapping("/sign-up")
     public String signUp() {
@@ -98,6 +98,7 @@ public class MemberController {
 
     private void makeLoginCookie(LoginRequestDTO dto, HttpServletResponse response) {
         Cookie cookie = new Cookie("login", dto.getEmail());
+        log.info("cookie: {}", cookie);
 
         cookie.setMaxAge(60);
         cookie.setPath("/");
@@ -105,18 +106,18 @@ public class MemberController {
         response.addCookie(cookie);
     }
     // 이메일 인증
-    @PostMapping("/email")
-    @ResponseBody
-    public ResponseEntity<?> mailCheck(@RequestBody String email) {
-        log.info("이메일 인증 요청 들어옴!: {}", email);
-        try {
-            String authNum = mailsenderService.joinEmail(email);
-            return ResponseEntity.ok().body(authNum);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body("이메일 전송 과정에서 에러 발생!");
-        }
-    }
+//    @PostMapping("/email")
+//    @ResponseBody
+//    public ResponseEntity<?> mailCheck(@RequestBody String email) {
+//        log.info("이메일 인증 요청 들어옴!: {}", email);
+//        try {
+//            String authNum = mailsenderService.joinEmail(email);
+//            return ResponseEntity.ok().body(authNum);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.internalServerError().body("이메일 전송 과정에서 에러 발생!");
+//        }
+//    }
 
     // my-page로 이동하는 메서드
     @GetMapping("/my-history")
@@ -132,9 +133,7 @@ public class MemberController {
         log.info("members/sign-out: Get");
 
 
-        // 로그아웃 처리 2가지 방법
-        // 로그인 정보 외에 다른 정보도 세션에 포함하고 있다면 1번 사용
-        // 세션 모든 정보를 초기화해도 된다면 2번 사용
+        // 로그아웃 처리
         // 1. 세션에서 로그인 정보 기록 삭제
         session.removeAttribute("login");
 
