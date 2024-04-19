@@ -1,6 +1,7 @@
 package com.ohnal.chap.dto.request;
 
 import com.ohnal.chap.entity.Member;
+import com.ohnal.chap.entity.Member.LoginMethod;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -21,7 +22,11 @@ public class SignUpRequestDTO {
     @NotBlank
     private  String password;
     @NotBlank
-    private  String nickname;
+    private String nickname;
+    @NotBlank
+    private String gender;
+    @NotBlank
+    private String address;
 
     private MultipartFile profileImage;
     private Member.LoginMethod loginMethod;
@@ -31,6 +36,9 @@ public class SignUpRequestDTO {
                 .email(email)
                 .password(encoder.encode(password))
                 .nickname(nickname)
+                .address(address)
+                .nickname(nickname)
+                .gender(gender)
                 .profileImage(savePath)
                 .loginMethod(loginMethod)
                 .build();

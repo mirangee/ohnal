@@ -7,13 +7,14 @@ import com.ohnal.chap.dto.response.BoardReplyResponseDTO;
 import com.ohnal.chap.entity.Board;
 import com.ohnal.chap.entity.Reply;
 import com.ohnal.chap.mapper.BoardMapper;
-import com.ohnal.util.LoginUtils;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -34,24 +35,43 @@ public class BoardService {
         
         return dtoList;
     }
+
+    // my-histor
+    public List<BoardListResponseDTO> findAllMyPosts(String email, Search page) {
+        List<BoardListResponseDTO> dtoList = new ArrayList<>();
+
+
+        List<Board> boardList = mapper.findAllMyPosts(email, page);
+        log.info("boardList: {}", boardList);
+
+
+        for (Board board : boardList) {
+            BoardListResponseDTO dto = new BoardListResponseDTO(board);
+            log.info("new BoardListResponseDTO(board): {}", dto);
+            dtoList.add(dto);
+        }
+        log.info("dtoList: {}", dtoList);
+        return dtoList;
+    }
     
     // 게시글 등록
-    public void save(BoardWriteRequestDTO dto, HttpSession session) {
-        Board board = new Board(dto);
+    public void save(BoardWriteRequestDTO dto, HttpSession session, String savePath) {
+        Board board = new Board(dto, savePath);
+        log.info(dto.toString());
         
-        board.setEmail(LoginUtils.getCurrentLoginMemberEmail(session));
+        board.setEmail("user123@naver.com");
+//        board.setEmail(LoginUtils.getCurrentLoginMemberEmail(session));
         
         mapper.save(board);
-        
     }
     
     // 페이징
-    public int getCount(Search page) {
-        return mapper.getCount(page);
+    public int getCount() {
+        return mapper.getCount();
     }
     
     public Board findOne(int bno) {
-        mapper.updateViewCount(bno);
+        mapper.updateCount(bno, "view");
         return mapper.findOne(bno);
     }
     
@@ -74,5 +94,7 @@ public class BoardService {
         reply.setEmail(email);
         
         mapper.replySave(reply);
+        
+        mapper.updateCount(dto.getBno(), "replies");
     }
 }

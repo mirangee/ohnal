@@ -11,7 +11,13 @@
         LIMIT #{pageStart}, #{amount}
     </select>
 
-
+    <!-- my-history 에서 내가 쓴 글 찾아오는 sql문 -->
+    <select id="findAllMyPosts" resultType="board">
+        SELECT * FROM tbl_board
+        WHERE email = #{email}
+        ORDER BY board_no DESC
+        LIMIT #{pageStart}, #{amount}
+    </select>
 
     <select id="getCount" resultType="int">
         SELECT COUNT(*)
@@ -32,9 +38,14 @@
         WHERE board_no = #{bno}
     </select>
 
-    <update id="updateViewCount">
+    <update id="updateCount">
         UPDATE tbl_board
-        SET view_count = view_count + 1
+        <if test="count == 'view'">
+            SET view_count = view_count + 1
+        </if>
+        <if test="count == 'replies'">
+            SET reply_count = reply_count + 1
+        </if>
         WHERE board_no = #{bno}
     </update>
     
@@ -46,7 +57,7 @@
         LEFT OUTER JOIN tbl_member B
         ON A.email = B.email
         WHERE board_no = #{bno}
-        ORDER BY reply_no
+        ORDER BY reply_no DESC
     </select>
 
     <insert id="replySave">

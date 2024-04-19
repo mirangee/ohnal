@@ -7,11 +7,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.SortedMap;
 import java.util.UUID;
 
 public class FileUtils {
 
-public  static String uploadFile(MultipartFile file, String rootPath){
+public static String uploadFile(MultipartFile file, String rootPath){
 String newFileName= UUID.randomUUID()+"_"+file.getOriginalFilename();
 String newUploadPath= makeDateFormatDirectory(rootPath);
 String fullPath= newUploadPath+"/"+newFileName;

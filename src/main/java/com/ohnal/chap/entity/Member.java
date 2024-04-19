@@ -20,8 +20,9 @@ public class Member {
     private LoginMethod loginMethod;
     private LocalDateTime regDate;
     private String Auth;
-    private String session_id;
+    private String sessionId;
     private LocalDateTime limitTime;
+
 
     public enum LoginMethod{
         COMMON,KAKAO
