@@ -65,7 +65,7 @@ public class MemberController {
         dto.setLoginMethod(Member.LoginMethod.COMMON);
 
         memberService.join(dto, savePath);
-        return "redirect:/chap/sign-in";
+        return "redirect:/members/sign-in";
     }
 
     @PostMapping("/sign-in")
