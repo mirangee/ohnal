@@ -42,7 +42,6 @@
             </a>
             <ul>
                 <li><a href="/board/list">OOTD 게시판</a></li>
-
                 <c:if test="${empty login}"> <!-- el 문법임. login이 null이라면 ${login == null}-->
                     <li><a href="/members/sign-up">Sign Up</a></li>
                     <li><a href="/members/sign-in">Sign In</a></li>
@@ -50,7 +49,7 @@
 
                 <c:if test="${not empty login}">
                     <li><a href="#">My Info</a></li>
-                    <li><a href="#">My History</a></li>
+                    <li><a href="/members/my-history">My History</a></li>
                     <li><a href="/members/sign-out">Sign Out</a></li>
                 </c:if>
             </ul>
