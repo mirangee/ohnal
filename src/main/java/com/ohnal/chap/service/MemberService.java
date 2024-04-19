@@ -65,8 +65,7 @@ public class MemberService {
             System.out.println("비밀번호가 일치하지 않습니다.");
             return NO_PW;
         }
-    return LoginResult.SUCCESS;
-    }
+
         // 자동 로그인 처리
         if (dto.isAutoLogin()) {
             // 1. 자동 로그인 쿠키 생성 - 쿠키 안에 절대 중복되지 않는 값을 저장. (브라우저 세션 아이디)

@@ -59,7 +59,7 @@
         const serverResult = '${result}';
         console.log(serverResult);
 
-        if (serverResult === 'NO_ACC') {
+        if (serverResult === 'NO_EMAIL') {
             alert('회원가입부터 하고 오세요~~');
         } else if (serverResult === 'NO_PW') {
             alert('비밀번호가 틀렸어요~');
