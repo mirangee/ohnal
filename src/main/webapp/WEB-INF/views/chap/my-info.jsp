@@ -6,7 +6,7 @@
   <title>Today's weather, oh-nal</title>
   <%@include file="../include/static-head.jsp"%>
 
-  <link rel="stylesheet" href="/assets/css/my-page.css">
+  <link rel="stylesheet" href="/assets/css/my-info.css">
 
 </head>
 
@@ -23,30 +23,55 @@
 
         <div class="image_container">
           <img class="image-preview" src="/assets/img/cody.png" alt="이미지 미리보기">
+          <p> ${login.nickname}님의 등록 정보입니다.</p>
         </div>
 
         <div class="form-selection">
           <div class="form-list">
-            <div class="form-email">
-              <p class="font"><strong>사용자 이메일</strong>&nbsp;&nbsp;&nbsp;</p>
-              <p>example@gmail.com</p>
-            </div>
+            <table>
+              <tr>
+                <td>
+                  <p class="font"><strong>email</strong></p>
+                </td>
+                <td><p>${login.email}</p></td>
+              </tr>
 
-            <div class="form-nick">
-              <p class="font"><strong>닉네임</strong>&nbsp;&nbsp;&nbsp;</p>
-            </div>
+              <tr>
+                <td>
+                  <p class="font"><strong>nickname</strong></p>
+                </td>
+                <td>
+                  <p> ${login.nickname}</p>
+                </td>
+              </tr>
 
-            <div class="address">
-              <p> 주소 </p>
-              <p> 서울시 마포구 신수동</p>
-            </div>
+              <tr>
+                <td>
+                  <p><strong>주소</strong></p>
+                </td>
+                <td>
+                  <p> ${login.address}</p>
+                </td>
+              </tr>
 
-            <div class="gender">
-              <p>성별</p>
-              <p>여자</p>
-            </div>
+              <tr>
+                <td>
+                  <p><strong>성별</strong></p>
+                </td>
+                <td>
+                  <c:if test="${empty login.gender}">
+                    <p>미설정</p>
+                  </c:if>
+                  <c:if test="${login.gender eq 'M'}">
+                    <p>남자</p>
+                  </c:if>
+                  <c:if test="${login.gender eq 'F'}">
+                    <p>여자</p>
+                  </c:if>
+                </td>
+              </tr>
+            </table>
           </div>
-
         </div>
       </div>
 
@@ -122,13 +147,13 @@
   <%@include file="../include/footer.jsp"%>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script>
-    const checkResultList = [false, false, false];
+    const checkResultList = [false, false, false, false];
     const $nickInput = document.getElementById('nick');
     const $pwInput = document.getElementById('pw');
     const $reChkPw = document.getElementById('pw2');
 
 
-    const passwordPattern = /([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/;
+    const passwordPattern =/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~@#$!%*?&])[a-zA-Z\d~@#$!%*?&]{8,}$/;
 
     $pwInput.addEventListener('keyup', () => {
       const pwValue = $pwInput.value.trim();
@@ -198,11 +223,11 @@
           if (flag) {
             $nickInput.style.borderColor = 'red';
             document.getElementById('nickChk').innerHTML = '<b style="color: red;">[닉네임이 중복되었습니다.]</b>';
-            checkResultList[4] = false;
+            checkResultList[3] = false;
           } else {
             $nickInput.style.borderColor = 'black';
             document.getElementById('nickChk').innerHTML = '<b style="color: black;">[사용 가능한 닉네임입니다.]</b>';
-            checkResultList[4] = true;
+            checkResultList[3] = true;
           }
         })
         .catch(error => {

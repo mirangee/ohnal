@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Slf4j
 public class MySectionController {
 
-    @GetMapping("/members/my-page")
+    @GetMapping("/members/my-info")
     public String myPage() {
-        return "chap/my-page";
+        return "chap/my-info";
     }
 
     @PostMapping("/members/modify-info")

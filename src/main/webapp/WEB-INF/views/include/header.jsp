@@ -15,7 +15,6 @@
                     <c:choose>
                         <c:when test="${login.profile != null}">
                             <div class="profile-box">
-                                <%-- 프사 경로 수정 필요--%>
                                 <img src="/display${login.profile}" alt="프사">
                             </div>
                             <p class="intro-text">${login.nickname}님, 안녕하세요!</p>
@@ -48,7 +47,7 @@
                 </c:if>
 
                 <c:if test="${not empty login}">
-                    <li><a href="#">My Info</a></li>
+                    <li><a href="/members/my-info">My Info</a></li>
                     <li><a href="/members/my-history">My History</a></li>
                     <li><a href="/members/sign-out">Sign Out</a></li>
                 </c:if>
