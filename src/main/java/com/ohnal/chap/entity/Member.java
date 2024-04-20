@@ -13,12 +13,16 @@ public class Member {
 
     private String email;
     private String password;
-    private String name;
-    private LocalDateTime regDate;
-
-    private LocalDateTime limitTime;
+    private String nickname;
+    private String address;
+    private String gender;
     private String profileImage;
-    private  LoginMethod loginMethod;
+    private LoginMethod loginMethod;
+    private LocalDateTime regDate;
+    private String Auth;
+    private String sessionId;
+    private LocalDateTime limitTime;
+
 
     public enum LoginMethod{
         COMMON,KAKAO

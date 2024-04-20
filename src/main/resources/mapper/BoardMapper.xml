@@ -11,6 +11,14 @@
         LIMIT #{pageStart}, #{amount}
     </select>
 
+    <!-- my-history 에서 내가 쓴 글 찾아오는 sql문 -->
+    <select id="findAllMyPosts" resultType="board">
+        SELECT * FROM tbl_board
+        WHERE email = #{email}
+        ORDER BY board_no DESC
+        LIMIT #{pageStart}, #{amount}
+    </select>
+
     <select id="getCount" resultType="int">
         SELECT COUNT(*)
         FROM tbl_board
@@ -18,10 +26,10 @@
 
     <insert id="save">
         INSERT INTO tbl_board (
-            nickname, content, image, location_tag, weather_tag
+            nickname, content, image, location_tag, weather_tag, email
         )
         VALUES (
-            #{nickname}, #{content}, #{image}, #{locationTag}, #{weatherTag}
+            #{nickname}, #{content}, #{image}, #{locationTag}, #{weatherTag}, #{email}
         )
     </insert>
 
@@ -29,5 +37,36 @@
         SELECT * FROM tbl_board
         WHERE board_no = #{bno}
     </select>
+
+    <update id="updateCount">
+        UPDATE tbl_board
+        <if test="count == 'view'">
+            SET view_count = view_count + 1
+        </if>
+        <if test="count == 'replies'">
+            SET reply_count = reply_count + 1
+        </if>
+        WHERE board_no = #{bno}
+    </update>
+    
+    <select id="replyList" resultType="reply">
+        SELECT
+            A.reply_no, A.content, A.reg_date,
+            B.email, B.nickname, B.profile_image
+        FROM tbl_reply A
+        LEFT OUTER JOIN tbl_member B
+        ON A.email = B.email
+        WHERE board_no = #{bno}
+        ORDER BY reply_no DESC
+    </select>
+
+    <insert id="replySave">
+        INSERT INTO tbl_reply (
+            email, board_no, content, nickname
+        )
+        VALUES (
+            #{email}, #{bno}, #{content}, #{nickname}
+        )
+    </insert>
 
 </mapper>

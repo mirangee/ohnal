@@ -3,10 +3,12 @@
 <html>
 
 <head>
-    <title>Today weather, oh-nal</title>
+    <title>Today's weather, oh-nal</title>
     <%@include file="../include/static-head.jsp"%>
-    <!-- page css -->
+
+    <!-- index page css -->
     <link rel="stylesheet" href="/assets/css/main.css">
+
     <!-- weather search event js -->
     <script src="/assets/js/weather-search.js" defer></script>
 
@@ -30,7 +32,6 @@
                 <div class="left-down">
                     <h2>오늘 ${dto.area1} ${dto.area2}의 기온은</h2>
                     <h2>최저 ${minInt}도, 최고 ${maxInt}도입니다</h2>
-
                 </div>
             </div>
             <div class="right-section">
@@ -44,10 +45,19 @@
                                 <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-0-male.png">
                         </div>
                         <div class="right-down swiper-slide" data-swiper-autoplay="3000">
+                            <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-0-female.png">
+                        </div>
+                        <div class="right-down swiper-slide" data-swiper-autoplay="3000">
                             <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-1-male.png">
                         </div>
                         <div class="right-down swiper-slide" data-swiper-autoplay="3000">
+                            <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-1-female.png">
+                        </div>
+                        <div class="right-down swiper-slide" data-swiper-autoplay="3000">
                             <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-2-male.png">
+                        </div>
+                        <div class="right-down swiper-slide" data-swiper-autoplay="3000">
+                            <img class = "clothes-img" src="/assets/img/clothes-image/range_code_${dto.styleImage}/${dto.styleImage}-2-female.png">
                         </div>
                     </div>
                     <!-- If we need pagination -->
@@ -260,10 +270,10 @@
             console.log(fail);
         }
 
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            console.log(pos);
-            var latitude = pos.coords.latitude;
-            var longitude = pos.coords.longitude;
+        navigator.geolocation.getCurrentPosition(function(permitPosition) {
+            console.log(permit);
+            var latitude = permitPosition.coords.latitude; // 위도
+            var longitude = permitPosition.coords.longitude; // 경도
             console.log("현재 위치는 : " + latitude + ", "+ longitude);
         });
 
