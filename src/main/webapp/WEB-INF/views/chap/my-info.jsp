@@ -6,7 +6,7 @@
   <title>Today's weather, oh-nal</title>
   <%@include file="../include/static-head.jsp"%>
 
-  <link rel="stylesheet" href="/assets/css/my-page.css">
+  <link rel="stylesheet" href="/assets/css/my-info.css">
 
 </head>
 
@@ -27,24 +27,38 @@
 
         <div class="form-selection">
           <div class="form-list">
-            <div class="form-email">
-              <p class="font"><strong>사용자 이메일</strong>&nbsp;&nbsp;&nbsp;</p>
-              <p>example@gmail.com</p>
-            </div>
 
-            <div class="form-nick">
-              <p class="font"><strong>닉네임</strong>&nbsp;&nbsp;&nbsp;</p>
-            </div>
+            <tr>
+              <td>
+                <p><strong>이메일</strong></p>
+              </td>
+              <td><p>${login.email}</p></td>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>닉네임</strong></p>
+              </td>
+              <td><p>${login.nickname}</p></td>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>주소</strong></p>
+              </td>
+              <td><p>${login.address}</p></td>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>성별</strong></p>
+              </td>
+              <td><p>${login.gender}</p></td>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>회원가입일</strong></p>
+              </td>
+              <td><p>${login.regDate}</p></td>
+            </tr>
 
-            <div class="address">
-              <p> 주소 </p>
-              <p> 서울시 마포구 신수동</p>
-            </div>
-
-            <div class="gender">
-              <p>성별</p>
-              <p>여자</p>
-            </div>
           </div>
 
         </div>
@@ -69,14 +83,14 @@
 
             <div class="form-email">
               <p class="font"><strong>이메일 (이메일은 수정이 불가합니다)</strong>&nbsp;&nbsp;&nbsp;</p>
-              <input type="email" id="email" name="email" placeholder="사용자 이메일" required="required"
+              <input type="email" id="email" name="email" placeholder="${login.email}" required="required"
                 aria-required="true" class="input" readonly>
             </div>
 
             <div class="form-nick">
               <p class="font"><strong>새로운 닉네임을 입력해주세요</strong>&nbsp;&nbsp;&nbsp;</p>
               <input type="text" id="nick" name="nick" placeholder="필수 입력란입니다." required="required" aria-required="true"
-                     maxlength="8" class="input">
+                     maxlength="8" class="input" value="${login.nickname}">
               <span id="nickChk"></span>
             </div>
 

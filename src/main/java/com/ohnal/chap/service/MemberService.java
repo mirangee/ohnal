@@ -114,6 +114,9 @@ public class MemberService {
                 .nickname(foundMember.getNickname())
                 .profile(foundMember.getProfileImage())
                 .loginMethod(foundMember.getLoginMethod().toString())
+                .address(foundMember.getAddress())
+                .gender(foundMember.getGender())
+                .regDate(String.valueOf(foundMember.getRegDate()))
                 .build();
 
         // 세션에 로그인한 회원 정보를 저장

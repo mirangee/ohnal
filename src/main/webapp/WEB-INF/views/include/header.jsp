@@ -11,22 +11,22 @@
             </h1>
             <div class="profile-wrapper">
                 <!-- 프로필 사진과 nickname 노출-->
-                <c:if test="${login != null}">
+                <c:if test="${login != null}"> <!--로그인이 되어 있고 -->
                     <c:choose>
-                        <c:when test="${login.profile != null}">
-                            <c:if test="${login.loginMethod eq 'KAKAO'}"> <!--카카오 로그인이면-->
+                        <c:when test="${login.profile != null}"> <!--프로필 사진이 있는데 -->
+                            <c:if test="${login.loginMethod eq 'KAKAO'}"> <!--1. 카카오 로그인이면-->
                                 <div class="profile-box">
                                     <img src="${login.profile}" alt="프사">
                                 </div>
                             </c:if>
-                            <c:if test="${login.loginMethod != 'KAKAO'}">
+                            <c:if test="${login.loginMethod != 'KAKAO'}"> <!-- 2. 카카오 로그인이 아니면-->
                                 <div class="profile-box">
                                     <img src="/display${login.profile}" alt="프사">
                                 </div>
                             </c:if>
                             <p class="intro-text">${login.nickname}님, 안녕하세요!</p>
                         </c:when>
-                        <c:otherwise>
+                        <c:otherwise> <!--프로필 사진이 없으면-->
                             <div class="profile-box">
                                 <img src="/assets/img/anonymous-image.png" alt="프사">
                             </div>
