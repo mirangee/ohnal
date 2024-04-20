@@ -66,7 +66,7 @@ public class SnsLoginService {
 
     }
 
-   //토큰발급
+   //토큰 발급
     private String getKakaoAccessToken(Map<String , String> requestParam) {
         String requestUri = "https://kauth.kakao.com/oauth/token";
         HttpHeaders headers = new HttpHeaders();

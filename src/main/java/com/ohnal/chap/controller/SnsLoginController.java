@@ -35,6 +35,7 @@ public class SnsLoginController {
 
     @GetMapping("/auth/kakao")
     public String snsKakao(String code , HttpSession session) {
+        log.info("카카오 로그인 인가코드: {}", code);
         Map<String , String> params = new HashMap<>();
         params.put("appkey", kakaoAppKey);
         params.put("redirect",kakaoRedirectUri);
