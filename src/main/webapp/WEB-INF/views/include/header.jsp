@@ -14,10 +14,16 @@
                 <c:if test="${login != null}">
                     <c:choose>
                         <c:when test="${login.profile != null}">
-                            <div class="profile-box">
-                                <%-- 프사 경로 수정 필요--%>
-                                <img src="/display${login.profile}" alt="프사">
-                            </div>
+                            <c:if test="${login.loginMethod eq 'KAKAO'}"> <!--카카오 로그인이면-->
+                                <div class="profile-box">
+                                    <img src="${login.profile}" alt="프사">
+                                </div>
+                            </c:if>
+                            <c:if test="${login.loginMethod != 'KAKAO'}">
+                                <div class="profile-box">
+                                    <img src="/display${login.profile}" alt="프사">
+                                </div>
+                            </c:if>
                             <p class="intro-text">${login.nickname}님, 안녕하세요!</p>
                         </c:when>
                         <c:otherwise>
