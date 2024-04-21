@@ -1,6 +1,6 @@
 .container {
-    margin-top: 180px;
-    margin-bottom: 50px;
+    margin-top: 160px;
+    margin-bottom: 30px;
     width: 50%;
     background: #fff;
     border: 1px solid #c7c7c7;
@@ -18,22 +18,19 @@
 h2 {
   text-align: center;
   margin-top: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   font-weight: 700;
 }
 
-/*p.font {*/
-/*  margin: 10px;*/
-/*  font-weight: 700;*/
-/*}*/
+/*'수정하기' 버튼 클릭 전 등록 정보 보여주기 style*/
 
 .image_container {
   width: 350px;
-  height: 380px;
+  height: 260px;
   margin: 0 auto;
 }
 
-.image-preview {
+#image-preview {
   width: 250px;
   height: 250px;
   margin: 0 auto;
@@ -44,11 +41,86 @@ h2 {
   display: block;
 }
 
-.btn_image {
-  width: 200px;
+.inner-before .form-selection {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.inner-before p.inform {
+
+  text-align: center;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.inner-before .form-selection div {
+  margin: 0 auto;
+  width: 60%;
+}
+
+/*table css*/
+
+table {
+  width: 60%;
+  text-align: center;
+  border: 1px solid #fff;
+  margin: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+table td {
+  padding: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  border: 1px solid #ffffff;
+}
+
+table tr td:first-child {
+  background: #12e6fc;
+  color: #333333;
+  font-weight: 700;
+  padding: 10px;
+  width: 30%;
+}
+
+table tr td:last-child {
+  text-align: left;
+}
+
+table tr td p {
+  padding: 0;
+  margin: 0;
+}
+
+
+/* table 모서리 둥글게 처리*/
+tr:first-child td:first-child {
+  border-top-left-radius: 10px;
+}
+tr:first-child td:last-child {
+  border-top-right-radius: 10px;
+}
+tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+tr:first-child td {
+  border-top-style: solid;
+}
+tr td:first-child {
+  border-left-style: solid;
+}
+
+/*수정하기 버튼 클릭시 style*/
+
+.inner-change .btn_image {
+  width: 170px;
   text-align: center;
   display: block;
-  margin: 30px auto 0;
+  margin: 10px auto 30px;
   text-decoration: none;
   padding: 10px 20px;
   background-color: black;
@@ -57,57 +129,50 @@ h2 {
   cursor: pointer;
 }
 
-.btn_image:hover {
+.inner-change .btn_image:hover {
   color: black;
   background-color: #12e6fc;
 }
 
-.btn_image label {
+
+.inner-change .form-selection {
+  margin: 0 auto;
+}
+
+
+.inner-change table .btn-modify {
+  font-size: 15px;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  text-decoration: none;
+  padding: 5px 10px;
+  background-color: black;
+  color: #12e6fc;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-.form-selection {
-  margin: 0 auto;
+.inner-change table .btn-modify:hover {
+  color: black;
+  background-color: #12e6fc;
 }
 
-.form-selection div {
-  margin: 0 auto;
-  width: 60%;
-}
-
-.input {
-  width: 400px;
-  height: 40px;
-  margin-bottom: 10px;
+.input-part {
+  width: 200px;
+  height: 30px;
+  margin-bottom: 7px;
   margin-top: 7px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.address {
-  width: 50%;
-  border: 1px solid lightgray;
-  border-radius: 10px;
+#pwChk, #reChkPw {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 20px;
 }
 
-.gender {
-  display: flex;
-}
-
-.btn_gender {
-  position: relative;
-  left: 30%;
-  border-radius: 5px;
-  height: 50px;
-  width: 100px;
-  border: 1px solid lightgray;
-  margin-top: 20px;
-  cursor: pointer;
-  justify-content: center;
-}
-.btn_gender:hover{
-  background-color: rgba(39, 185, 10, 0.3);
-}
 
 #submit_button {
   width: 200px;
