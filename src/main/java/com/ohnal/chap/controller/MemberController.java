@@ -5,6 +5,7 @@ import com.ohnal.chap.common.PageMaker;
 import com.ohnal.chap.dto.request.LoginRequestDTO;
 import com.ohnal.chap.dto.request.SignUpRequestDTO;
 import com.ohnal.chap.dto.response.BoardListResponseDTO;
+import com.ohnal.chap.dto.response.LoginUserResponseDTO;
 import com.ohnal.chap.entity.Member;
 import com.ohnal.chap.service.*;
 import com.ohnal.util.FileUtils;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tags.shaded.org.apache.xalan.templates.ElemValueOf;
@@ -102,7 +104,7 @@ public class MemberController {
 
             // 로그인을 했다는 정보를 계속 유지하기 위한 수단으로 쿠키를 사용하자.
 
-            makeLoginCookie(dto, response);
+             makeLoginCookie(dto, response);
 
             // 세션으로 로그인 유지
             memberService.maintainLoginState(request.getSession(), dto.getEmail());
@@ -121,6 +123,36 @@ public class MemberController {
 
         response.addCookie(cookie);
     }
+
+    // 로그아웃 요청 처리
+    @GetMapping("/sign-out")
+    public String signOut(HttpSession session,
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
+        log.info("/member/sign-out: GET!");
+
+        // 자동 로그인 중인지 확인
+        if (isAutoLogin(request)) {
+            // 쿠키를 삭제해주고 DB 데이터도 원래대로 돌려놓아야 한다.
+            memberService.autoLoginClear(request, response);
+        }
+
+        // sns 로그인 상태인지를 확인
+        LoginUserResponseDTO dto = (LoginUserResponseDTO) session.getAttribute(LOGIN_KEY);
+        if (dto.getLoginMethod().equals("KAKAO")) {
+            memberService.kakaoLogout(dto, session);
+        }
+
+        // 세션에서 로그인 정보 기록 삭제
+        session.removeAttribute("login");
+
+        // 세션 전체 무효화 (초기화)
+        session.invalidate();
+
+        return "redirect:/members/sign-in";
+
+    }
+
     // 이메일 인증
     @PostMapping("/email")
     @ResponseBody
@@ -134,29 +166,12 @@ public class MemberController {
             return ResponseEntity.internalServerError().body("이메일 전송 과정에서 에러 발생!");
         }
     }
-    // 로그아웃 요청 처리
-    @GetMapping("/sign-out")
-    public String signOut(HttpSession session,
-                          HttpServletRequest request,
-                          HttpServletResponse response) {
-        log.info("members/sign-out: Get");
-
-
-        // 로그아웃 처리
-        // 1. 세션에서 로그인 정보 기록 삭제
-        session.removeAttribute("login");
-
-        // 2. 세션 전체 무효화(초기화)
-        session.invalidate();
-
-        return "redirect:/index";
-    }
 
     //-----------------------my-history-----------------------
 
-    // my-page로 이동하는 메서드
+    // my-history로 이동하는 메서드
     @GetMapping("/my-history")
-    public String myHistory(HttpSession session, Page page, Model model) {
+    public String myHistory(HttpSession session, @ModelAttribute("s") Page page, Model model) {
         log.info("my-history 페이지 들어옴");
 
         String loginUserEmail = getCurrentLoginMemberEmail(session);
@@ -170,11 +185,38 @@ public class MemberController {
         PageMaker maker = new PageMaker(page, boardService.getMyPostsCount(loginUserEmail));
         log.info("maker: {}", maker);
         log.info("조회한 게시물 총량: {}", String.valueOf(maker.getTotalCount()));
+        log.info("boardListResponseDTO: {}", allMyPosts);
 
-        model.addAttribute("allMyPosts", allMyPosts);
+        model.addAttribute("myPosts", allMyPosts);
         model.addAttribute("maker", maker);
 
         return "chap/my-history";
     }
+
+    // my-history에서 작성 글(버튼) 눌렀을 때
+    @GetMapping("/my-history/{email}")
+    public ResponseEntity<?> myPosts(@PathVariable("email") String email) {
+        log.info("my-history 페이지에서 작성한 글(버튼) 눌러서 fetch 작동함");
+        log.info("email: {}", email);
+
+        List<BoardListResponseDTO> myPosts = boardService.myPosts(email);
+        log.info("myPosts: {}", myPosts);
+        return ResponseEntity.ok().body(myPosts);
+    }
+
+    // my-history에서 작성 댓글(버튼) 눌렀을 때
+    /*
+    @GetMapping("/my-history/my-write-reply/{email}")
+    public ResponseEntity<?> myWriteReply(@PathVariable("email") String email) {
+        log.info("my-history 페이지에서 작성한 글(버튼) 눌러서 fetch 작동함");
+        log.info("email: {}", email);
+
+        // 여기서 myPosts는 내가 작성한 댓글의 글들의 정보를 담은 List컬렉션
+        // List<BoardListResponseDTO> myPosts = boardService.myWriteReply(email);
+
+    }
+
+     */
+
 
 }

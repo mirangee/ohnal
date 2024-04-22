@@ -69,11 +69,9 @@ public class BoardService {
         return dtoList;
     }
     
-    public void writeReply(ReplyPostRequestDTO dto, String email, String nickname) {
+    public void writeReply(ReplyPostRequestDTO dto) {
         
-        Reply reply = dto.toEntity(nickname);
-        
-        reply.setEmail(email);
+        Reply reply = dto.toEntity();
         
         mapper.replySave(reply);
         
@@ -98,5 +96,43 @@ public class BoardService {
 
     public int getMyPostsCount(String loginUserEmail) {
         return mapper.getMyPostsCount(loginUserEmail);
+    }
+
+    public void delete(int bno) {
+
+        mapper.delete(bno);
+
+    }
+
+    // ----------------- my-history에서 작성한 글(버튼) 누름 -----------------
+    public List<BoardListResponseDTO> myPosts(String email) {
+        List<BoardListResponseDTO> dtoList = new ArrayList<>();
+        List<Board> boardList = mapper.myPosts(email);
+
+        log.info("boardList: {}", boardList);
+
+        for (Board board : boardList) {
+            BoardListResponseDTO dto = new BoardListResponseDTO(board);
+            log.info("new BoardListResponseDTO(board): {}", dto);
+            dtoList.add(dto);
+        }
+        log.info("dtoList: {}", dtoList);
+        return dtoList;
+    }
+
+    public List<BoardListResponseDTO> myWriteReply(String email) {
+        List<BoardListResponseDTO> dtoList = new ArrayList<>();
+        List<Board> boardList = mapper.myWriteReply(email);
+
+        log.info("boardList: {}", boardList);
+
+        for (Board board : boardList) {
+            BoardListResponseDTO dto = new BoardListResponseDTO(board);
+            log.info("new BoardListResponseDTO(board): {}", dto);
+            dtoList.add(dto);
+        }
+        log.info("dtoList: {}", dtoList);
+        return dtoList;
+
     }
 }
