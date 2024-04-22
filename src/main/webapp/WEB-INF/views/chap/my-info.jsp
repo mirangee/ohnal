@@ -8,6 +8,9 @@
 
   <link rel="stylesheet" href="/assets/css/my-info.css">
 
+  <!-- my-info js -->
+  <script src="/assets/js/my-info.js" defer></script>
+
 </head>
 
 <%@include file="../include/header.jsp"%>
@@ -16,123 +19,151 @@
 
 
   <div class="container">
-    <h2>My PAGE</h2>
-    <form action="/members/modify-info" class="form" name="modify-info" id="modify-info" method="post" enctype="multipart/form-data">
+    <h2>My Info</h2>
+    <form action="/modify-info" class="form" name="modify-info" id="modify-info" method="post" enctype="multipart/form-data">
+
+      <div class="image_container">
+        <img id="image-preview" src="/display${login.profile}" alt="프로필 사진">
+      </div>
 
       <div class="inner-before">
-
-        <div class="image_container">
-          <img class="image-preview" src="/assets/img/cody.png" alt="이미지 미리보기">
-          <p> ${login.nickname}님의 등록 정보입니다.</p>
-        </div>
-
         <div class="form-selection">
-          <div class="form-list">
-            <table>
-              <tr>
-                <td>
-                  <p class="font"><strong>email</strong></p>
-                </td>
-                <td><p>${login.email}</p></td>
-              </tr>
+          <p class="inform"> ${login.nickname}님의 등록 정보입니다</p>
+          <table>
+            <tr>
+              <td>
+                <p><strong>이메일</strong></p>
+              </td>
+              <td><p>${login.email}</p>
+                <input type="hidden" id="email" name="email" value="${login.email}">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>닉네임</strong></p>
+              </td>
+              <td><p>${login.nickname}</p></td>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>주소</strong></p>
+              </td>
+              <td><p>${login.address}</p></td>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>성별</strong></p>
+              </td>
+              <c:if test="${login.gender eq 'M'}">
+                <td><p>남자</p></td>
+              </c:if>
+              <c:if test="${login.gender eq 'F'}">
+                <td><p>여자</p></td>
+              </c:if>
+              <c:if test="${login.gender eq null}">
+                <td><p>미입력</p></td>
+              </c:if>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>가입일</strong></p>
+              </td>
+              <td><p>${login.regDate}</p></td>
+            </tr>
 
-              <tr>
-                <td>
-                  <p class="font"><strong>nickname</strong></p>
-                </td>
-                <td>
-                  <p> ${login.nickname}</p>
-                </td>
-              </tr>
+          </table>
 
-              <tr>
-                <td>
-                  <p><strong>주소</strong></p>
-                </td>
-                <td>
-                  <p> ${login.address}</p>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <p><strong>성별</strong></p>
-                </td>
-                <td>
-                  <c:if test="${empty login.gender}">
-                    <p>미설정</p>
-                  </c:if>
-                  <c:if test="${login.gender eq 'M'}">
-                    <p>남자</p>
-                  </c:if>
-                  <c:if test="${login.gender eq 'F'}">
-                    <p>여자</p>
-                  </c:if>
-                </td>
-              </tr>
-            </table>
-          </div>
         </div>
       </div>
 
 
+      <%-- 수정하기 버튼 클릭 시 노출 --%>
       <div class="inner-change" style="display: none">
 
-        <div class="image_container">
-          <img class="image-preview" src="/assets/img/cody.png" alt="이미지 미리보기">
           <div class="btn_image">
-            <label for="selectFile">
               프로필 사진 변경
-            </label>
-            <input type="file" id="selectFile" name="selectFile" accept="image/*" style="display: none;">
           </div>
-
-        </div>
+          <input type="file" id="profileImage" name="profileImage" accept="image/*" style="display: none;">
 
         <div class="form-selection">
-          <div class="form-list">
 
-            <div class="form-email">
-              <p class="font"><strong>이메일 (이메일은 수정이 불가합니다)</strong>&nbsp;&nbsp;&nbsp;</p>
-              <input type="email" id="email" name="email" placeholder="사용자 이메일" required="required"
-                aria-required="true" class="input" readonly>
-            </div>
+          <table>
+            <tr>
+              <td>
+                <p><strong>이메일</strong></p>
+              </td>
+              <td><p>${login.email}</p></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>닉네임</strong></p>
+              </td>
+              <td><input class="input-part" id="nick" type="text" value=${login.nickname} name="nickname" required="required" aria-required="true"
+                         placeholder="2자 이상 영문/한글 입력" maxlength="8"></input></td>
+              <td><button id="nickname-check" class="btn-modify">중복 확인</button></td>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>주소</strong></p>
+              </td>
+              <td>
+                <input class="input-part" type="text" id="origin-address" value="${login.address}" readonly>
+                <input class="input-part" type="text" id="sample6_address" placeholder="주소" style="display: none"><br>
+                <input class="input-part" type="text" id="sample6_detailAddress" placeholder="상세주소" style="display: none">
+                <input class="input-part" type="hidden" id="address" name="address">
+              </td>
+              <td><input class="btn-modify" type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기"></td>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>성별</strong></p>
+              </td>
+              <c:if test="${login.gender eq 'M'}">
+                <td><input type="radio" name="gender" value="M" checked> 남자
+                <input type="radio" name="gender" value="F"> 여자</td>
+                <td></td>
+              </c:if>
+              <c:if test="${login.gender eq 'F'}">
+                <td><input type="radio" name="gender" value="M"> 남자
+                <input type="radio" name="gender" value="F" checked> 여자</td>
+                <td></td>
+              </c:if>
+              <c:if test="${login.gender eq null}">
+                <td><input type="radio" name="gender" value="M"> 남자
+                <input type="radio" name="gender" value="F"> 여자</td>
+                <td></td>
+              </c:if>
+            </tr>
+            <tr>
+              <td>
+                <p><strong>가입일</strong></p>
+              </td>
+              <td><p>${login.regDate}</p></td>
+              <td></td>
+            </tr>
 
-            <div class="form-nick">
-              <p class="font"><strong>새로운 닉네임을 입력해주세요</strong>&nbsp;&nbsp;&nbsp;</p>
-              <input type="text" id="nick" name="nick" placeholder="필수 입력란입니다." required="required" aria-required="true"
-                     maxlength="8" class="input">
-              <span id="nickChk"></span>
-            </div>
+            <tr>
+              <td>
+                <p><strong>비밀번호</strong></p>
+              </td>
+              <td>
+                <p id="pw-inform">암호화되어 저장됨</p>
+                <div class="form-list" style="display: none;">
+                  <p class="font"><strong>새 비밀번호 입력</strong></p>
+                  <input class="input-part" type="password" name="password" id="pw" name="pw" placeholder="영문+특수문자 8자리 이상" maxlength="20"
+                         required="required" aria-required="true" class="input">
+                  <span id="pwChk"></span>
+                  <p class="font"><strong>비밀번호 재확인</strong></p>
+                  <input class="input-part" type="password" id="pw2" name="pw2" placeholder="비밀번호 재입력" maxlength="20"
+                         required="required" aria-required="true" class="input">
+                  <span id="reChkPw"></span>
+                </div>
+              </td>
+              <td><input id="modify-pw" class="btn-modify" type="button" value="비밀번호 변경"></td>
+            </tr>
 
-            <div class="form-pw">
-              <p class="font"><strong> 새로운 비밀번호를 입력해주세요</strong>&nbsp;&nbsp;&nbsp;</p>
-              <input type="password" id="pw" name="pw" placeholder="영문과 특수문자를 포함한 8자를 입력해주세요" maxlength="20"
-                required="required" aria-required="true" class="input">
-              <span id="pwChk"></span>
-            </div>
-            <div class="form-pw2">
-              <p class="font"><strong>비밀번호를 재확인해주세요</strong>&nbsp;&nbsp;&nbsp;</p>
-              <input type="password" id="pw2" name="pw2" placeholder="입력하신 비밀번호와 동일하게 입력해주세요" maxlength="20"
-                required="required" aria-required="true" class="input">
-              <span id="reChkPw"></span>
-            </div>
-
-            <div class="address">
-              <p class="font"><strong>주소를 입력해 주세요</strong>&nbsp;&nbsp;&nbsp;</p>
-              <input type="text" id="sample6_postcode" placeholder="우편번호">
-              <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-              <input type="text" id="sample6_address" placeholder="주소"><br>
-              <input type="text" id="sample6_detailAddress" placeholder="상세주소">
-              <input type="text" id="sample6_extraAddress" placeholder="참고항목">
-            </div>
-
-            <div class="gender">
-              <p class="font"><strong>성별을 선택해 주세요</strong>&nbsp;&nbsp;&nbsp;</p>
-              <button type="button" class="btn_gender M" name="gender" value="M" class="blind">남자</button>
-              <button type="button" class="btn_gender F" name="gender2" value="F" class="blind">여자</button>
-            </div>
-          </div>
+          </table>
 
         </div>
 
@@ -147,161 +178,13 @@
   <%@include file="../include/footer.jsp"%>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script>
-    const checkResultList = [false, false, false, false];
-    const $nickInput = document.getElementById('nick');
-    const $pwInput = document.getElementById('pw');
-    const $reChkPw = document.getElementById('pw2');
-
-
-    const passwordPattern =/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~@#$!%*?&])[a-zA-Z\d~@#$!%*?&]{8,}$/;
-
-    $pwInput.addEventListener('keyup', () => {
-      const pwValue = $pwInput.value.trim();
-
-      if (pwValue === '') {
-        $pwInput.style.borderColor = 'red';
-        document.getElementById('pwChk').innerHTML = '<b style="color: red;">비밀번호는 필수값입니다</b>';
-        checkResultList[0] = false;
-        return;
-      } else if (!passwordPattern.test(pwValue)) {
-        $pwInput.style.borderColor = 'red';
-        document.getElementById('pwChk').innerHTML = '<b style="color: red;">특수문자 포함 8자 이상 입력해주세요</b>';
-        checkResultList[0] = false;
-        return;
-      } else {
-        $pwInput.style.borderColor = 'black';
-        document.getElementById('pwChk').innerHTML = '<b style="color: skyblue;">[사용가능한 비밀번호입니다]</b>';
-        checkResultList[0] = true;
-      }
-    });
-
-    $reChkPw.addEventListener('keyup', () => {
-      const reChkPwVal = $reChkPw.value.trim();
-      const pwValue = $pwInput.value.trim();
-
-      if (reChkPwVal === '') {
-        document.getElementById('reChkPw').innerHTML = '<b style="color: red;">비밀번호 확인은 필수입력입니다.</b>';
-        checkResultList[1] = false;
-        return;
-      } else if (reChkPwVal !== pwValue) {
-        document.getElementById('reChkPw').innerHTML = '<b style="color: red;">비밀번호와 일치하지 않습니다..</b>';
-        checkResultList[1] = false;
-        return;
-      } else {
-        $reChkPw.style.borderColor = 'black';
-        document.getElementById('reChkPw').innerHTML = '<b style="color: skyblue;">[비밀번호와 일치합니다.]</b>';
-        checkResultList[1] = true;
-      }
-    });
-
-    const nickPattern = /^[a-zA-Z가-힣]{2,}$/;
-
-    $nickInput.addEventListener('keyup', () => {
-      const nickValue = $nickInput.value.trim();
-
-      if (nickValue === '') {
-        $nickInput.style.borderColor = 'red';
-        document.getElementById('nickChk').innerHTML = '<b style="color: red;">[닉네임은 필수값입니다!]</b>';
-        checkResultList[2] = false;
-        return;
-      } else if (!nickPattern.test(nickValue)) {
-        $nickInput.style.borderColor = 'red';
-        document.getElementById('nickChk').innerHTML =
-          '<b style="color: red;">[닉네임은 2글자 이상의 영문,한글로 입력해주세요]</b>';
-        checkResultList[2] = false;
-        return;
-      } else {
-        $nickInput.style.borderColor = 'skyblue';
-        document.getElementById('nickChk').innerHTML = '<b style="color: skyblue;">[확인되었습니다.]</b>';
-        checkResultList[2] = true;
-      }
-
-      // Fetch API를 사용하여 서버에서 중복 여부 확인
-      fetch(`/checkNick?nick=${nickValue}`)
-        .then(res => res.json())
-        .then(flag => {
-          if (flag) {
-            $nickInput.style.borderColor = 'red';
-            document.getElementById('nickChk').innerHTML = '<b style="color: red;">[닉네임이 중복되었습니다.]</b>';
-            checkResultList[3] = false;
-          } else {
-            $nickInput.style.borderColor = 'black';
-            document.getElementById('nickChk').innerHTML = '<b style="color: black;">[사용 가능한 닉네임입니다.]</b>';
-            checkResultList[3] = true;
-          }
-        })
-        .catch(error => {
-          console.error('Error checking nickname:', error);
-        });
-    });
-
-
-
-    const $image = document.getElementById('imagePreview');
-    const $profile_btn = document.querySelector('.btn_image')
-    const $fileInput = document.getElementById('selectFile');
-
-    $profile_btn.onclick = e => {
-      $fileInput.click();
-    }
-
-    $fileInput.onchange = e => {
-      const fileData = $fileInput.files[0];
-      const reader = new FileReader();
-
-      reader.readAsDataURL(fileData);
-
-      reader.onloadend = () => {
-        $image.setAttribute('src', reader.result);
-      }
-    }
-
-
-    const $maleButton = document.querySelector('.M');
-    const $femaleButton = document.querySelector('.F');
-    let selectGender = null;
-
-    $maleButton.addEventListener('click', () => {
-      selectGender = 'M';
-      $maleButton.style.backgroundColor = "rgba(4, 25, 44, 0.3)";
-      $femaleButton.style.backgroundColor = "";
-    });
-
-    $femaleButton.addEventListener('click', () => {
-      selectGender = 'F';
-      $femaleButton.style.backgroundColor = "rgba(4, 25, 44, 0.3)";
-      $maleButton.style.backgroundColor = "";
-    });
-
-
-
-
-    document.getElementById('submit_button').onclick = e => {
-      const $form = document.getElementById('modify-info');
-      const $submit = document.getElementById('submit_button'); // 수정하기 버튼
-      const $before = document.querySelector('.inner-before'); // 수정하기 전 사용자 정보 화면
-      const $modify = document.querySelector('.inner-change'); // 사용자가 수정할 수 있는 화면
-
-      if ($submit.textContent === "수정하기") {
-        $submit.textContent = "수정 완료";
-        $before.setAttribute("style", "display:none");
-        $modify.removeAttribute("style");
-        return;
-      }
-
-      console.log($submit.textContent);
-
-      if (e.textContent !== "수정 완료") {
-        if (!checkResultList.includes(false)) {
-          alert('입력란을 다시 확인해주세요');
-        } else {
-          $form.submit();
-        }
-      }
-    }
-
-    // 카카오 주소API
     function sample6_execDaumPostcode() {
+      // 수정 모드에서 주소 변경 버튼 누르면 input 태그 생성
+      document.getElementById('origin-address').setAttribute("style", "display:none");
+      document.getElementById('sample6_address').removeAttribute("style");
+      document.getElementById('sample6_detailAddress').removeAttribute("style");
+
+
       new daum.Postcode({
         oncomplete: function (data) {
           // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -333,22 +216,22 @@
             if (extraAddr !== '') {
               extraAddr = ' (' + extraAddr + ')';
             }
-            // 조합된 참고항목을 해당 필드에 넣는다.
-            document.getElementById("sample6_extraAddress").value = extraAddr;
-
-          } else {
-            document.getElementById("sample6_extraAddress").value = '';
           }
 
           // 우편번호와 주소 정보를 해당 필드에 넣는다.
-          document.getElementById('sample6_postcode').value = data.zonecode;
           document.getElementById("sample6_address").value = addr;
           // 커서를 상세주소 필드로 이동한다.
           document.getElementById("sample6_detailAddress").focus();
+
+          document.getElementById('sample6_address').readOnly = true;
+
+          document.getElementById('address').value = addr;
         }
       }).open();
     }
+
   </script>
+
 </body>
 
 </html>

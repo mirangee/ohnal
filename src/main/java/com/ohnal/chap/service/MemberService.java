@@ -46,6 +46,12 @@ public class MemberService {
         memberMapper.save(dto.toEntity(encoder, savePath));
     }
 
+    // 회원 정보 수정 처리 서비스
+    public void modify(SignUpRequestDTO dto, String savePath) {
+        log.info("회원 정보 수정 처리 요청 들어옴! mapper로 접근합니다");
+        memberMapper.modify(dto.toEntity(encoder, savePath));
+    }
+
     // 로그인 검증 처리
     public LoginResult authenticate(LoginRequestDTO dto,
                                     HttpSession session,
@@ -116,6 +122,7 @@ public class MemberService {
                 .loginMethod(foundMember.getLoginMethod().toString())
                 .address(foundMember.getAddress())
                 .gender(foundMember.getGender())
+                .regDate(String.valueOf(foundMember.getRegDate()))
                 .build();
 
         // 세션에 로그인한 회원 정보를 저장
