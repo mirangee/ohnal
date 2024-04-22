@@ -1,7 +1,7 @@
 package com.ohnal.chap.controller;
 
-import com.ohnal.chap.dto.response.ModifyUserResponseDTO;
-import com.ohnal.chap.dto.request.SignUpRequestDTO;
+import com.ohnal.chap.dto.request.ModifyRequestDTO;
+import com.ohnal.chap.dto.response.LoginUserResponseDTO;
 import com.ohnal.chap.service.MemberService;
 import com.ohnal.util.FileUtils;
 import jakarta.servlet.http.HttpSession;
@@ -30,15 +30,14 @@ public class MySectionController {
         log.info("my-info 요청 들어옴!");
         String loginMemberEmail = getCurrentLoginMemberEmail(session);
 
-        ModifyUserResponseDTO memberInfo = memberService.getMemberInfo(loginMemberEmail);
-        memberInfo.setRegDate(memberInfo.getRegDate());
+        LoginUserResponseDTO memberInfo = memberService.getMemberInfo(loginMemberEmail);
         model.addAttribute("memberInfo", memberInfo);
 
         return "chap/my-info";
     }
 
     @PostMapping("/modify-info")
-    public String modifyInfo(SignUpRequestDTO dto) {
+    public String modifyInfo(ModifyRequestDTO dto) {
         log.info("modify info 요청 들어옴!");
         log.info(dto.toString());
 
@@ -46,11 +45,24 @@ public class MySectionController {
             rootPath = rootPath + "/profile";
         }
 
-        String savePath = "/profile" + FileUtils.uploadFile(dto.getProfileImage(), rootPath);
-        log.info("save-path: {}", savePath);
+        if (dto.getProfileImage() != null && dto.getPassword() != null) {  // 모든 정보 변경됨
+            log.info("모든 정보 변경됨");
+            String savePath = "/profile" + FileUtils.uploadFile(dto.getProfileImage(), rootPath);
+//            memberService.modifyAll(dto, savePath);
+        } else if(dto.getProfileImage() != null){ // 비번 변경 안 되고 프사 변경 됨
+            log.info("비번 변경 안 되고 프사 변경 됨");
+            String savePath = "/profile" + FileUtils.uploadFile(dto.getProfileImage(), rootPath);
+//            memberService.modifyProfile(dto, savePath);
+        } else if(dto.getPassword() != null){ // 비번 변경 되고 프사 변경 안 됨
+            log.info("비번 변경 되고 프사 변경 안 됨");
+//            memberService.modifyPw(dto);
+        } else { // 비번, 프사 빼고 변경됨
+            log.info("비번, 프사 빼고 변경됨");
+//            memberService.modifyInfo(dto);
+        }
 
-        memberService.modify(dto, savePath);
-        log.info("회원 정보 수정 완료!");
+
+
 
         return "redirect:/members/sign-out";
     }

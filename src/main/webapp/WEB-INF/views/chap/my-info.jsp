@@ -26,7 +26,7 @@
     <form action="/modify-info" class="form" name="modify-info" id="modify-info" method="post" enctype="multipart/form-data">
 
       <div class="image_container">
-        <img id="image-preview" src="/display${memberInfo.profileImage}" alt="프로필 사진">
+        <img id="image-preview" src="/display${memberInfo.profile}" alt="프로필 사진">
       </div>
 
       <div class="inner-before">
@@ -86,7 +86,7 @@
           <div class="btn_image">
               프로필 사진 변경
           </div>
-          <input type="file" id="profileImage" name="profileImage" value="${memberInfo.profileImage}" accept="image/*" style="display: none;">
+          <input type="file" id="profileImage" name="profileImage" accept="image/*" style="display: none;">
 
         <div class="form-selection">
 
@@ -188,12 +188,12 @@
     (function( ){
       if(${memberInfo.loginMethod eq 'KAKAO'}) {
         if (pathIncludes === true) {
-          $profileImage.setAttribute("src", "/display${memberInfo.profileImage}");
+          $profileImage.setAttribute("src", "/display${memberInfo.profile}");
         } else {
-          $profileImage.setAttribute("src", "${memberInfo.profileImage}");
+          $profileImage.setAttribute("src", "${memberInfo.profile}");
         }
       } else if (${memberInfo.loginMethod eq 'COMMON'}) {
-        $profileImage.setAttribute("src", "/display${memberInfo.profileImage}");
+        $profileImage.setAttribute("src", "/display${memberInfo.profile}");
       } else {
         $profileImage.setAttribute("src", "/assets/img/anonymous-image.png");
       }

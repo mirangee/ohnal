@@ -2,7 +2,7 @@ package com.ohnal.chap.service;
 
 import com.ohnal.chap.dto.request.AutoLoginDTO;
 import com.ohnal.chap.dto.request.LoginRequestDTO;
-import com.ohnal.chap.dto.response.ModifyUserResponseDTO;
+import com.ohnal.chap.dto.request.ModifyRequestDTO;
 import com.ohnal.chap.dto.request.SignUpRequestDTO;
 import com.ohnal.chap.dto.response.LoginUserResponseDTO;
 import com.ohnal.chap.entity.Member;
@@ -48,12 +48,6 @@ public class MemberService {
        // String encodedPw = encoder.encode(dto.getPassword());
        // dto.setPassword(encodedPw);
         memberMapper.save(dto.toEntity(encoder, savePath));
-    }
-
-    // 회원 정보 수정 처리 서비스
-    public void modify(SignUpRequestDTO dto, String savePath) {
-        log.info("회원 정보 수정 처리 요청 들어옴! mapper로 접근합니다");
-        memberMapper.modify(dto.toEntity(encoder, savePath));
     }
 
     // 로그인 검증 처리
@@ -162,15 +156,15 @@ public class MemberService {
 
     }
 
-    public ModifyUserResponseDTO getMemberInfo(String account) {
+    public LoginUserResponseDTO getMemberInfo(String account) {
         Member foundMember = memberMapper.findMember(account);
 
-        ModifyUserResponseDTO dto = ModifyUserResponseDTO.builder()
+        LoginUserResponseDTO dto = LoginUserResponseDTO.builder()
                 .email(foundMember.getEmail())
                 .nickname(foundMember.getNickname())
                 .address(foundMember.getAddress())
                 .gender(foundMember.getGender())
-                .profileImage(foundMember.getProfileImage())
+                .profile(foundMember.getProfileImage())
                 .loginMethod(foundMember.getLoginMethod().toString())
                 .regDate(String.valueOf(foundMember.getRegDate()).substring(0,10))
                 .build();
@@ -207,5 +201,25 @@ public class MemberService {
     }
 
 
+    // 회원 정보 수정 처리 서비스
+    // 1. password와 profile 수정 없음
+    public void modifyInfo(ModifyRequestDTO dto) {
+        memberMapper.modify(dto.toEntity());
+    }
 
+    // 2. password 수정 있고 profile 수정 없음
+    public void modifyPw(ModifyRequestDTO dto) {
+        memberMapper.modify(dto.toEntity(encoder));
+    }
+
+    // 3. password 수정 없고 profile 수정 있음
+
+    public void modifyProfile(ModifyRequestDTO dto,String savePath) {
+        memberMapper.modify(dto.toEntity(savePath));
+    }
+
+    // 4. password 수정 있고 profile 수정 있음
+    public void modifyAll(ModifyRequestDTO dto, String savePath) {
+        memberMapper.modify(dto.toEntity(encoder, savePath));
+    }
 }

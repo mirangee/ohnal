@@ -27,8 +27,38 @@ public class ModifyRequestDTO {
     private String address;
 
     private MultipartFile profileImage;
-    
-    private LoginMethod loginMethod;
+
+
+
+    public Member toEntity() {
+        return Member.builder()
+                .email(email)
+                .nickname(nickname)
+                .address(address)
+                .gender(gender)
+                .build();
+    }
+
+    public Member toEntity(PasswordEncoder encoder) {
+        return Member.builder()
+                .email(email)
+                .nickname(nickname)
+                .password(encoder.encode(password))
+                .address(address)
+                .gender(gender)
+                .build();
+    }
+
+    public Member toEntity(String savePath) {
+        return Member.builder()
+                .email(email)
+                .nickname(nickname)
+                .address(address)
+                .gender(gender)
+                .profileImage(savePath)
+                .build();
+    }
+
 
     public Member toEntity(PasswordEncoder encoder, String savePath) {
         return Member.builder()
@@ -39,7 +69,6 @@ public class ModifyRequestDTO {
                 .nickname(nickname)
                 .gender(gender)
                 .profileImage(savePath)
-                .loginMethod(loginMethod)
                 .build();
     }
 }
