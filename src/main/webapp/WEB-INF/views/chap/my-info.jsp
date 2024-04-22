@@ -86,7 +86,7 @@
           <div class="btn_image">
               프로필 사진 변경
           </div>
-          <input type="file" id="profileImage" name="profileImage" accept="image/*" style="display: none;">
+          <input type="file" id="profileImage" name="profileImage" accept="image/*" hidden>
 
         <div class="form-selection">
 
@@ -145,37 +145,15 @@
               <td><p>${memberInfo.regDate}</p></td>
               <td></td>
             </tr>
-
-<%--            <c:if test="${login.loginMethod eq 'COMMON'}">--%>
-<%--              <tr>--%>
-<%--                <td>--%>
-<%--                  <p><strong>비밀번호</strong></p>--%>
-<%--                  <p><strong>${login.password}</strong></p>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                  <p id="pw-inform">암호화 저장 완료</p>--%>
-
-<%--                  <div class="form-list" style="display: none;">--%>
-<%--                    <p class="font"><strong>새 비밀번호 입력</strong></p>--%>
-<%--                    <input class="input-part" type="password" id="pw" placeholder="영문+숫자+특수문자 8자리 이상" maxlength="20"--%>
-<%--                           class="input">--%>
-<%--                    <span id="pwChk"></span>--%>
-<%--                    <p class="font"><strong>비밀번호 재확인</strong></p>--%>
-<%--                    <input class="input-part" type="password" id="pw2" placeholder="비밀번호 재입력" maxlength="20"--%>
-<%--                           class="input">--%>
-<%--                    <input type="file" id="password" name="password" style="display: none;">--%>
-<%--                    <span id="reChkPw"></span>--%>
-<%--                  </div>--%>
-<%--                </td>--%>
-<%--                <td><input id="modify-pw" class="btn-modify" type="button" value="비밀번호 변경"></td>--%>
-<%--              </tr>--%>
-<%--            </c:if>--%>
           </table>
         </div>
       </div>
 
-      <button type="button" id="submit_button">수정하기</button>
+      <button type="button" id="submit_button">회원정보 수정</button>
 
+      <c:if test="${login.loginMethod eq 'COMMON'}">
+        <button type="button" id="change-password">비밀번호 변경</button>
+      </c:if>
     </form>
   </div>
 
@@ -183,19 +161,18 @@
 
   <script>
     // 프로필 사진 렌더링 즉시 실행 함수
-    const $profileImage = document.getElementById('image-preview');
-    const pathIncludes = ("${login.profile}").includes("/profile"); // 카카오 로그인 회원이 프로필 사진 수정 이력이 있으면 경로 변경
+    const profileIncludes = ("${login.profile}").includes("/profile"); // 카카오 로그인 회원이 프로필 사진 수정 이력이 있으면 경로 변경
     (function( ){
       if(${memberInfo.loginMethod eq 'KAKAO'}) {
-        if (pathIncludes === true) {
-          $profileImage.setAttribute("src", "/display${memberInfo.profile}");
+        if (profileIncludes === true) {
+          document.getElementById('image-preview').setAttribute("src", "/display${memberInfo.profile}");
         } else {
-          $profileImage.setAttribute("src", "${memberInfo.profile}");
+          document.getElementById('image-preview').setAttribute("src", "${memberInfo.profile}");
         }
       } else if (${memberInfo.loginMethod eq 'COMMON'}) {
-        $profileImage.setAttribute("src", "/display${memberInfo.profile}");
+        document.getElementById('image-preview').setAttribute("src", "/display${memberInfo.profile}");
       } else {
-        $profileImage.setAttribute("src", "/assets/img/anonymous-image.png");
+        document.getElementById('image-preview').setAttribute("src", "/assets/img/anonymous-image.png");
       }
     } )( );
   </script>

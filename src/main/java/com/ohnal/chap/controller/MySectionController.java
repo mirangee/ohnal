@@ -29,11 +29,22 @@ public class MySectionController {
 
         log.info("my-info 요청 들어옴!");
         String loginMemberEmail = getCurrentLoginMemberEmail(session);
-
         LoginUserResponseDTO memberInfo = memberService.getMemberInfo(loginMemberEmail);
         model.addAttribute("memberInfo", memberInfo);
 
         return "chap/my-info";
+    }
+
+    @GetMapping("/members/changePassword")
+    private String changePassword() {
+        return "chap/change-pw";
+    }
+
+    @PostMapping("/members/changePassword")
+    private String pwChange(String email, String password) {
+        log.info("비밀번호 변경 요청이 들어옴!!");
+        memberService.changePassword(email, password);
+        return "redirect:/members/my-info";
     }
 
     @PostMapping("/modify-info")
@@ -45,25 +56,15 @@ public class MySectionController {
             rootPath = rootPath + "/profile";
         }
 
-        if (dto.getProfileImage() != null && dto.getPassword() != null) {  // 모든 정보 변경됨
+        if (dto.getProfileImage() != null ) {  // 모든 정보 변경됨
             log.info("모든 정보 변경됨");
             String savePath = "/profile" + FileUtils.uploadFile(dto.getProfileImage(), rootPath);
-//            memberService.modifyAll(dto, savePath);
-        } else if(dto.getProfileImage() != null){ // 비번 변경 안 되고 프사 변경 됨
-            log.info("비번 변경 안 되고 프사 변경 됨");
-            String savePath = "/profile" + FileUtils.uploadFile(dto.getProfileImage(), rootPath);
-//            memberService.modifyProfile(dto, savePath);
-        } else if(dto.getPassword() != null){ // 비번 변경 되고 프사 변경 안 됨
-            log.info("비번 변경 되고 프사 변경 안 됨");
-//            memberService.modifyPw(dto);
-        } else { // 비번, 프사 빼고 변경됨
+            memberService.modifyAll(dto, savePath);
+        } else { // 프사 빼고 변경됨
             log.info("비번, 프사 빼고 변경됨");
-//            memberService.modifyInfo(dto);
+            memberService.modifyInfo(dto);
         }
 
-
-
-
-        return "redirect:/members/sign-out";
+        return "redirect:/members/my-info";
     }
 }

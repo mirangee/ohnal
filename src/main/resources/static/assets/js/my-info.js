@@ -1,4 +1,4 @@
-const checkResultList = [true, true, true]; // 0 - 닉네임 중복, 1,2 - 비밀번호 변경 시 결과 확인
+const checkResultList = [true]; // 0 - 닉네임 중복
 
 // 수정하기 버튼 누르면 수정 모드로 전환하기
 document.getElementById('submit_button').onclick = e => {
@@ -7,7 +7,7 @@ document.getElementById('submit_button').onclick = e => {
     const $before = document.querySelector('.inner-before'); // 수정하기 전 사용자 정보 화면
     const $modify = document.querySelector('.inner-change'); // 사용자가 수정할 수 있는 화면
 
-    if ($submit.textContent === "수정하기") {
+    if ($submit.textContent === "회원정보 수정") {
         $submit.textContent = "수정 저장";
         $before.setAttribute("style", "display:none");
         $modify.removeAttribute("style");
@@ -15,18 +15,23 @@ document.getElementById('submit_button').onclick = e => {
     }
     console.log($submit.textContent);
 
-    if (e.textContent !== "수정 저장") {
+    if (e.textContent !== "회원정보 수정") {
         if (checkResultList.includes(false)) {
-            alert('입력란을 다시 확인해주세요');
+            alert('입력란과 중복 확인을 다시 확인해주세요');
         } else {
             $form.submit();
-            alert('정보 수정이 완료되었습니다! 다시 로그인해주세요.');
+            alert('정보 수정이 완료되었습니다!');
         }
     }
 }
 
+// 비밀번호 변경 버튼 누르면 비밀번호 변경 페이지로 이동
+document.getElementById('change-password').onclick = () => {
+    location.replace("/members/changePassword");
+}
+
 // 프로필 사진 변경 버튼
-const $proflieImage = document.getElementById('image-preview');
+const $image = document.getElementById('image-preview');
 const $profile_btn = document.querySelector('.btn_image')
 const $fileInput = document.getElementById('profileImage');
 
@@ -40,7 +45,7 @@ $fileInput.onchange = e => {
     reader.readAsDataURL(fileData);
 
     reader.onloadend = e => {
-        $profileImage.setAttribute('src', reader.result);
+        $image.setAttribute('src', reader.result);
     }
 }
 
@@ -49,6 +54,10 @@ $fileInput.onchange = e => {
     const $duplicationCheck = document.getElementById('nickname-check');
     const nickPattern = /^[a-zA-Z가-힣]{2,}$/;
     const originNick = $nickInput.value.trim();
+
+    $nickInput.onchange = () => {
+        checkResultList[0] = false;
+    }
 
     $duplicationCheck.addEventListener('click', () => {
         const nickValue = $nickInput.value.trim();
@@ -77,60 +86,6 @@ $fileInput.onchange = e => {
                 });
         }
     });
-
-// 수정 모드에서 비밀번호 변경 버튼 누르면 비밀번호 변경 창 생성
-document.getElementById('modify-pw').onclick = () => {
-    checkResultList[1] = false;
-    document.querySelector('.form-list').setAttribute("style", "display:block");
-    document.getElementById('pw-inform').setAttribute("style","display:none");
-    document.getElementById('modify-pw').setAttribute("style", "display:none");
-};
-
-// 비밀번호 입력 검증
-const $pwInput = document.getElementById('pw');
-const $reChkPw = document.getElementById('pw2');
-
-const passwordPattern =/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~@#$!%*?&])[a-zA-Z\d~@#$!%*?&]{8,}$/;
-
-$pwInput.addEventListener('keyup', () => {
-    const pwValue = $pwInput.value.trim();
-
-    if (pwValue === '') {
-        $pwInput.style.borderColor = 'red';
-        document.getElementById('pwChk').innerHTML = '<b style="color: red;">비밀번호는 필수값입니다</b>';
-        checkResultList[1] = false;
-        return;
-    } else if (!passwordPattern.test(pwValue)) {
-        $pwInput.style.borderColor = 'red';
-        document.getElementById('pwChk').innerHTML = '<b style="color: red;">영문+숫자+특수문자 8자 이상 입력하세요</b>';
-        checkResultList[1] = false;
-        return;
-    } else {
-        $pwInput.style.borderColor = 'black';
-        document.getElementById('pwChk').innerHTML = '<b style="color: #0a0064;">[사용가능한 비밀번호입니다]</b>';
-        checkResultList[1] = true;
-    }
-});
-
-$reChkPw.addEventListener('keyup', () => {
-    const reChkPwVal = $reChkPw.value.trim();
-    const pwValue = $pwInput.value.trim();
-
-    if (reChkPwVal === '') {
-        document.getElementById('reChkPw').innerHTML = '<b style="color: red;">비밀번호 확인은 필수입니다.</b>';
-        checkResultList[2] = false;
-        return;
-    } else if (reChkPwVal !== pwValue) {
-        document.getElementById('reChkPw').innerHTML = '<b style="color: red;">비밀번호와 일치하지 않습니다.</b>';
-        checkResultList[2] = false;
-        return;
-    } else {
-        $reChkPw.style.borderColor = 'black';
-        document.getElementById('reChkPw').innerHTML = '<b style="color: #0a0064;">[비밀번호와 일치합니다.]</b>';
-        checkResultList[2] = true;
-    }
-});
-
 
 // 주소 찾기 API
 function sample6_execDaumPostcode() {

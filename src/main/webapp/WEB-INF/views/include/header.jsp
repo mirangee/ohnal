@@ -46,21 +46,21 @@
 
         <script>
             // 프로필 사진 렌더링 즉시 실행 함수
-            <%--const $profileImage = document.getElementById('profile');--%>
-            <%--const pathIncludes = ("${login.profile}").includes("/profile"); // 카카오 로그인 회원이 프로필 사진 수정 이력이 있으면 경로 변경--%>
-            <%--(function( ){--%>
-            <%--    if(${login.loginMethod eq 'KAKAO'}) {--%>
-            <%--        if (pathIncludes) {--%>
-            <%--            $profileImage.setAttribute("src", "/display${login.profile}");--%>
-            <%--        } else {--%>
-            <%--            $profileImage.setAttribute("src", "${login.profile}");--%>
-            <%--        }--%>
-            <%--    } else if (${login.loginMethod eq 'COMMON'}) {--%>
-            <%--        $profileImage.setAttribute("src", "/display${login.profile}");--%>
-            <%--    } else {--%>
-            <%--        $profileImage.setAttribute("src", "/assets/img/anonymous-image.png");--%>
-            <%--    }--%>
-            <%--} )( );--%>
+            const $profileImage = document.getElementById('profile');
+            const pathIncludes = ("${login.profile}").includes("/profile"); // 카카오 로그인 회원이 프로필 사진 수정 이력이 있으면 경로 변경
+            (function( ){
+                if(${login.loginMethod eq 'KAKAO'}) {
+                    if (pathIncludes) {
+                        $profileImage.setAttribute("src", "/display${login.profile}");
+                    } else {
+                        $profileImage.setAttribute("src", "${login.profile}");
+                    }
+                } else if (${login.loginMethod eq 'COMMON'}) {
+                    $profileImage.setAttribute("src", "/display${login.profile}");
+                } else {
+                    $profileImage.setAttribute("src", "/assets/img/anonymous-image.png");
+                }
+            } )( );
         </script>
     </header>
     <!-- //header -->

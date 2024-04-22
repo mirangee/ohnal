@@ -18,8 +18,6 @@ public class ModifyRequestDTO {
 
     private String email;
 
-    private  String password;
-
     private String nickname;
 
     private String gender;
@@ -39,15 +37,6 @@ public class ModifyRequestDTO {
                 .build();
     }
 
-    public Member toEntity(PasswordEncoder encoder) {
-        return Member.builder()
-                .email(email)
-                .nickname(nickname)
-                .password(encoder.encode(password))
-                .address(address)
-                .gender(gender)
-                .build();
-    }
 
     public Member toEntity(String savePath) {
         return Member.builder()
@@ -59,16 +48,4 @@ public class ModifyRequestDTO {
                 .build();
     }
 
-
-    public Member toEntity(PasswordEncoder encoder, String savePath) {
-        return Member.builder()
-                .email(email)
-                .password(encoder.encode(password))
-                .nickname(nickname)
-                .address(address)
-                .nickname(nickname)
-                .gender(gender)
-                .profileImage(savePath)
-                .build();
-    }
 }

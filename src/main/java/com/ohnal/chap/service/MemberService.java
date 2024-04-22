@@ -202,24 +202,13 @@ public class MemberService {
 
 
     // 회원 정보 수정 처리 서비스
-    // 1. password와 profile 수정 없음
+    // 1. profile 수정 없음
     public void modifyInfo(ModifyRequestDTO dto) {
         memberMapper.modify(dto.toEntity());
     }
 
-    // 2. password 수정 있고 profile 수정 없음
-    public void modifyPw(ModifyRequestDTO dto) {
-        memberMapper.modify(dto.toEntity(encoder));
-    }
-
-    // 3. password 수정 없고 profile 수정 있음
-
-    public void modifyProfile(ModifyRequestDTO dto,String savePath) {
+    // 2. profile 수정 있음
+    public void modifyAll(ModifyRequestDTO dto,String savePath) {
         memberMapper.modify(dto.toEntity(savePath));
-    }
-
-    // 4. password 수정 있고 profile 수정 있음
-    public void modifyAll(ModifyRequestDTO dto, String savePath) {
-        memberMapper.modify(dto.toEntity(encoder, savePath));
     }
 }
