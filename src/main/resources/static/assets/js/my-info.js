@@ -8,14 +8,14 @@ document.getElementById('submit_button').onclick = e => {
     const $modify = document.querySelector('.inner-change'); // 사용자가 수정할 수 있는 화면
 
     if ($submit.textContent === "수정하기") {
-        $submit.textContent = "수정 완료";
+        $submit.textContent = "수정 저장";
         $before.setAttribute("style", "display:none");
         $modify.removeAttribute("style");
         return;
     }
     console.log($submit.textContent);
 
-    if (e.textContent !== "수정 완료") {
+    if (e.textContent !== "수정 저장") {
         if (checkResultList.includes(false)) {
             alert('입력란을 다시 확인해주세요');
         } else {
@@ -26,7 +26,7 @@ document.getElementById('submit_button').onclick = e => {
 }
 
 // 프로필 사진 변경 버튼
-const $image = document.getElementById('image-preview');
+const $proflieImage = document.getElementById('image-preview');
 const $profile_btn = document.querySelector('.btn_image')
 const $fileInput = document.getElementById('profileImage');
 
@@ -40,7 +40,7 @@ $fileInput.onchange = e => {
     reader.readAsDataURL(fileData);
 
     reader.onloadend = e => {
-        $image.setAttribute('src', reader.result);
+        $profileImage.setAttribute('src', reader.result);
     }
 }
 
@@ -83,7 +83,7 @@ document.getElementById('modify-pw').onclick = () => {
     checkResultList[1] = false;
     document.querySelector('.form-list').setAttribute("style", "display:block");
     document.getElementById('pw-inform').setAttribute("style","display:none");
-    document.getElementById('modify-pw').setAttribute("style", "display:none")
+    document.getElementById('modify-pw').setAttribute("style", "display:none");
 };
 
 // 비밀번호 입력 검증
@@ -102,7 +102,7 @@ $pwInput.addEventListener('keyup', () => {
         return;
     } else if (!passwordPattern.test(pwValue)) {
         $pwInput.style.borderColor = 'red';
-        document.getElementById('pwChk').innerHTML = '<b style="color: red;">영문+특수문자 8자 이상 입력해 주세요</b>';
+        document.getElementById('pwChk').innerHTML = '<b style="color: red;">영문+숫자+특수문자 8자 이상 입력하세요</b>';
         checkResultList[1] = false;
         return;
     } else {
@@ -130,3 +130,57 @@ $reChkPw.addEventListener('keyup', () => {
         checkResultList[2] = true;
     }
 });
+
+
+// 주소 찾기 API
+function sample6_execDaumPostcode() {
+    // 수정 모드에서 주소 변경 버튼 누르면 input 태그 생성
+    document.getElementById('origin-address').setAttribute("style", "display:none");
+    document.getElementById('sample6_address').removeAttribute("style");
+    document.getElementById('sample6_detailAddress').removeAttribute("style");
+
+
+    new daum.Postcode({
+        oncomplete: function (data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if (data.userSelectedType === 'R') {
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if (data.buildingName !== '' && data.apartment === 'Y') {
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if (extraAddr !== '') {
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById("sample6_address").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("sample6_detailAddress").focus();
+
+            document.getElementById('sample6_address').readOnly = true;
+
+            document.getElementById('address').setAttribute("value", addr);
+        }
+    }).open();
+}

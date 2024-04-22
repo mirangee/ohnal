@@ -2,6 +2,7 @@ package com.ohnal.chap.service;
 
 import com.ohnal.chap.dto.request.AutoLoginDTO;
 import com.ohnal.chap.dto.request.LoginRequestDTO;
+import com.ohnal.chap.dto.response.ModifyUserResponseDTO;
 import com.ohnal.chap.dto.request.SignUpRequestDTO;
 import com.ohnal.chap.dto.response.LoginUserResponseDTO;
 import com.ohnal.chap.entity.Member;
@@ -20,12 +21,6 @@ import java.time.LocalDateTime;
 
 import static com.ohnal.chap.service.LoginResult.NO_PW;
 import static com.ohnal.chap.service.LoginResult.SUCCESS;
-import static com.ohnal.util.LoginUtils.*;
-import org.springframework.web.util.WebUtils;
-
-import java.time.LocalDateTime;
-
-import static com.ohnal.chap.service.LoginResult.NO_PW;
 import static com.ohnal.util.LoginUtils.*;
 
 
@@ -49,6 +44,7 @@ public class MemberService {
     // 회원 정보 수정 처리 서비스
     public void modify(SignUpRequestDTO dto, String savePath) {
         log.info("회원 정보 수정 처리 요청 들어옴! mapper로 접근합니다");
+        log.info(dto.toString());
         memberMapper.modify(dto.toEntity(encoder, savePath));
     }
 
@@ -122,6 +118,7 @@ public class MemberService {
                 .loginMethod(foundMember.getLoginMethod().toString())
                 .address(foundMember.getAddress())
                 .gender(foundMember.getGender())
+                .password(foundMember.getPassword())
                 .regDate(String.valueOf(foundMember.getRegDate()))
                 .build();
 
@@ -153,5 +150,20 @@ public class MemberService {
             );
         }
 
+    }
+
+    public ModifyUserResponseDTO getMemberInfo(String account) {
+        Member foundMember = memberMapper.findMember(account);
+
+        ModifyUserResponseDTO dto = ModifyUserResponseDTO.builder()
+                .email(foundMember.getEmail())
+                .nickname(foundMember.getNickname())
+                .address(foundMember.getAddress())
+                .gender(foundMember.getGender())
+                .profileImage(foundMember.getProfileImage())
+                .loginMethod(foundMember.getLoginMethod().toString())
+                .regDate(String.valueOf(foundMember.getRegDate()).substring(0,10))
+                .build();
+        return dto;
     }
 }

@@ -16,4 +16,5 @@ public class LoginUserResponseDTO {
     private String address;
     private String gender;
     private String regDate;
+    private String password;
 }
