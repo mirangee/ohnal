@@ -23,7 +23,7 @@
 
   <div class="container">
     <h2>My Info</h2>
-    <form action="/modify-info" class="form" name="modify-info" id="modify-info" method="post" enctype="multipart/form-data">
+
 
       <div class="image_container">
         <img id="image-preview" src="/display${memberInfo.profile}" alt="프로필 사진">
@@ -38,7 +38,6 @@
                 <p><strong>이메일</strong></p>
               </td>
               <td><p>${memberInfo.email}</p>
-                <input type="hidden" id="email" name="email" value="${memberInfo.email}">
               </td>
             </tr>
             <tr>
@@ -51,7 +50,14 @@
               <td>
                 <p><strong>주소</strong></p>
               </td>
-              <td><p>${memberInfo.address}</p></td>
+              <c:choose>
+                <c:when test="${memberInfo.address == ''}">
+                  <td><p>미입력</p></td>
+                </c:when>
+                <c:otherwise>
+                  <td><p>${memberInfo.address}</p></td>
+                </c:otherwise>
+              </c:choose>
             </tr>
             <tr>
               <td>
@@ -82,70 +88,73 @@
 
       <%-- 수정하기 버튼 클릭 시 노출 --%>
       <div class="inner-change" style="display: none">
-
+        <form action="/modify-profile" class="form" id="modify-profile" method="post" enctype="multipart/form-data">
+          <input type="file" id="profileImage" name="profileImage" accept="image/*" hidden>
           <div class="btn_image">
               프로필 사진 변경
           </div>
-          <input type="file" id="profileImage" name="profileImage" accept="image/*" hidden>
+        </form>
 
         <div class="form-selection">
-
-          <table>
-            <tr>
-              <td>
-                <p><strong>이메일</strong></p>
-              </td>
-              <td><p>${memberInfo.email}</p></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>
-                <p><strong>닉네임</strong></p>
-              </td>
-              <td><input class="input-part" id="nick" type="text" value=${memberInfo.nickname} name="nickname" required="required" aria-required="true"
-                         placeholder="2자 이상 영문/한글 입력" maxlength="8"></td>
-              <td><button type="button" id="nickname-check" class="btn-modify">중복 확인</button></td>
-            </tr>
-            <tr>
-              <td>
-                <p><strong>주소</strong></p>
-              </td>
-              <td>
-                <input class="input-part" type="text" id="origin-address" value="${memberInfo.address}" readonly>
-                <input class="input-part" type="text" id="sample6_address" placeholder="주소" style="display: none"><br>
-                <input class="input-part" type="text" id="sample6_detailAddress" placeholder="상세주소" style="display: none">
-                <input class="input-part" type="hidden" id="address" name="address" value="${memberInfo.address}">
-              </td>
-              <td><input class="btn-modify" type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기"></td>
-            </tr>
-            <tr>
-              <td>
-                <p><strong>성별</strong></p>
-              </td>
-              <c:if test="${memberInfo.gender eq 'M'}">
-                <td><input type="radio" name="gender" value="M" checked> 남자
-                <input type="radio" name="gender" value="F"> 여자</td>
+          <form action="/modify-info" class="form" name="modify-info" id="modify-info" method="post" enctype="multipart/form-data">
+            <table>
+              <tr>
+                <td>
+                  <p><strong>이메일</strong></p>
+                </td>
+                <td><p>${memberInfo.email}</p></td>
+                <input type="hidden" id="email" name="email" value="${memberInfo.email}">
                 <td></td>
-              </c:if>
-              <c:if test="${memberInfo.gender eq 'F'}">
-                <td><input type="radio" name="gender" value="M"> 남자
-                <input type="radio" name="gender" value="F" checked> 여자</td>
+              </tr>
+              <tr>
+                <td>
+                  <p><strong>닉네임</strong></p>
+                </td>
+                <td><input class="input-part" id="nick" type="text" value=${memberInfo.nickname} name="nickname" required="required" aria-required="true"
+                           placeholder="2자 이상 영문/한글 입력" maxlength="8"></td>
+                <td><button type="button" id="nickname-check" class="btn-modify">중복 확인</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <p><strong>주소</strong></p>
+                </td>
+                <td>
+                  <input class="input-part" type="text" id="origin-address" value="${memberInfo.address}" readonly>
+                  <input class="input-part" type="text" id="sample6_address" placeholder="주소" style="display: none"><br>
+                  <input class="input-part" type="text" id="sample6_detailAddress" placeholder="상세주소" style="display: none">
+                  <input class="input-part" type="hidden" id="address" name="address" value="${memberInfo.address}">
+                </td>
+                <td><input class="btn-modify" type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기"></td>
+              </tr>
+              <tr>
+                <td>
+                  <p><strong>성별</strong></p>
+                </td>
+                <c:if test="${memberInfo.gender eq 'M'}">
+                  <td><input type="radio" name="gender" value="M" checked> 남자
+                  <input type="radio" name="gender" value="F"> 여자</td>
+                  <td></td>
+                </c:if>
+                <c:if test="${memberInfo.gender eq 'F'}">
+                  <td><input type="radio" name="gender" value="M"> 남자
+                  <input type="radio" name="gender" value="F" checked> 여자</td>
+                  <td></td>
+                </c:if>
+                <c:if test="${memberInfo.gender eq null}">
+                  <td><input type="radio" name="gender" value="M"> 남자
+                  <input type="radio" name="gender" value="F"> 여자</td>
+                  <td></td>
+                </c:if>
+              </tr>
+              <tr>
+                <td>
+                  <p><strong>가입일</strong></p>
+                </td>
+                <td><p>${memberInfo.regDate}</p></td>
                 <td></td>
-              </c:if>
-              <c:if test="${memberInfo.gender eq null}">
-                <td><input type="radio" name="gender" value="M"> 남자
-                <input type="radio" name="gender" value="F"> 여자</td>
-                <td></td>
-              </c:if>
-            </tr>
-            <tr>
-              <td>
-                <p><strong>가입일</strong></p>
-              </td>
-              <td><p>${memberInfo.regDate}</p></td>
-              <td></td>
-            </tr>
-          </table>
+              </tr>
+            </table>
+          </form>
         </div>
       </div>
 
@@ -154,7 +163,7 @@
       <c:if test="${login.loginMethod eq 'COMMON'}">
         <button type="button" id="change-password">비밀번호 변경</button>
       </c:if>
-    </form>
+
   </div>
 
   <%@include file="../include/footer.jsp"%>
@@ -175,6 +184,11 @@
         document.getElementById('image-preview').setAttribute("src", "/assets/img/anonymous-image.png");
       }
     } )( );
+
+    // 비밀번호 변경 버튼 누르면 비밀번호 변경 페이지로 이동
+    document.getElementById('change-password').onclick = () => {
+        location.replace("/members/changePassword");
+    }
   </script>
 
 </body>

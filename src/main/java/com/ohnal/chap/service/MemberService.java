@@ -202,13 +202,11 @@ public class MemberService {
 
 
     // 회원 정보 수정 처리 서비스
-    // 1. profile 수정 없음
     public void modifyInfo(ModifyRequestDTO dto) {
         memberMapper.modify(dto.toEntity());
     }
 
-    // 2. profile 수정 있음
-    public void modifyAll(ModifyRequestDTO dto,String savePath) {
-        memberMapper.modify(dto.toEntity(savePath));
+    public void modifyProfileImage(String email, String savePath) {
+        memberMapper.modifyProfileImage(email, savePath);
     }
 }

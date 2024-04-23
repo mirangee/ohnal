@@ -25,10 +25,6 @@ document.getElementById('submit_button').onclick = e => {
     }
 }
 
-// 비밀번호 변경 버튼 누르면 비밀번호 변경 페이지로 이동
-document.getElementById('change-password').onclick = () => {
-    location.replace("/members/changePassword");
-}
 
 // 프로필 사진 변경 버튼
 const $image = document.getElementById('image-preview');
@@ -47,6 +43,29 @@ $fileInput.onchange = e => {
     reader.onloadend = e => {
         $image.setAttribute('src', reader.result);
     }
+
+    // 비동기 방식으로 프로필 사진 DB에 업데이트 하기
+    const formData = new FormData();
+    const fileField = document.querySelector('input[type=file]');
+
+    formData.append("profileImage", fileField.files[0]);
+    upload(formData);
+}
+
+// 비동기 방식 프로필 사진 DB 업데이트 함수
+async function upload(formData) {
+    const url = '/modify-profile';
+    const data = {
+        method: 'PUT',
+        body: formData
+    }
+    try {
+        const response = await fetch(url, data);
+        const result = await response.json();
+        console.log("성공: ", result)
+    } catch (error) {
+        console.log("실패: ", error);
+    }
 }
 
 // 수정 모드에서 닉네임 수정하고 중복확인 처리
@@ -55,7 +74,7 @@ $fileInput.onchange = e => {
     const nickPattern = /^[a-zA-Z가-힣]{2,}$/;
     const originNick = $nickInput.value.trim();
 
-    $nickInput.onchange = () => {
+    $nickInput.onchange = e => {
         checkResultList[0] = false;
     }
 

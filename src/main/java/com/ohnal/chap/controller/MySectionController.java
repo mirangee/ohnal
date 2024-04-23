@@ -10,8 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import static com.ohnal.util.LoginUtils.getCurrentLoginMemberEmail;
 
@@ -47,23 +48,28 @@ public class MySectionController {
         return "redirect:/members/my-info";
     }
 
-    @PostMapping("/modify-info")
-    public String modifyInfo(ModifyRequestDTO dto) {
-        log.info("modify info 요청 들어옴!");
-        log.info(dto.toString());
-
+    @PutMapping("/modify-profile")
+    @ResponseBody
+    private void modifyProfile(HttpSession session, @RequestBody MultipartFile profileImage) {
+        log.info("프로필 사진 변경 요청이 들어옴!");
         if (!rootPath.contains("/profile")) {
             rootPath = rootPath + "/profile";
         }
 
-        if (dto.getProfileImage() != null ) {  // 모든 정보 변경됨
-            log.info("모든 정보 변경됨");
-            String savePath = "/profile" + FileUtils.uploadFile(dto.getProfileImage(), rootPath);
-            memberService.modifyAll(dto, savePath);
-        } else { // 프사 빼고 변경됨
-            log.info("비번, 프사 빼고 변경됨");
-            memberService.modifyInfo(dto);
-        }
+        String loginMemberEmail = getCurrentLoginMemberEmail(session);
+        String savePath = "/profile" + FileUtils.uploadFile(profileImage, rootPath);
+        memberService.modifyProfileImage(loginMemberEmail, savePath);
+        log.info("프로필 사진 변경 저장 완료!");
+    }
+
+    @PostMapping("/modify-info")
+    public String modifyInfo(ModifyRequestDTO dto, HttpSession session) {
+        log.info("modify info 요청 들어옴!");
+        log.info(dto.toString());
+
+        memberService.modifyInfo(dto);
+        memberService.maintainLoginState(session, dto.getEmail()); // 바뀐 정보로 세션 업데이트
+
 
         return "redirect:/members/my-info";
     }

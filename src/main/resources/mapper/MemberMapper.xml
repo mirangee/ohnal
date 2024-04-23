@@ -50,7 +50,13 @@
         SET
         nickname = #{nickname},
         address = #{address},
-        gender = #{gender},
+        gender = #{gender}
+        WHERE email = #{email}
+    </update>
+
+    <update id="modifyProfileImage">
+        UPDATE tbl_member
+        SET
         profile_image = #{profileImage}
         WHERE email = #{email}
     </update>

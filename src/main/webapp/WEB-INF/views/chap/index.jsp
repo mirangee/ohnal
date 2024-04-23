@@ -340,11 +340,6 @@
             },
         });
         swiper.autoplay.start();
-
-
-
-
-
     </script>
 </body>
 </html>

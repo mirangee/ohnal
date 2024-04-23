@@ -24,9 +24,6 @@ public class ModifyRequestDTO {
 
     private String address;
 
-    private MultipartFile profileImage;
-
-
 
     public Member toEntity() {
         return Member.builder()
@@ -34,17 +31,6 @@ public class ModifyRequestDTO {
                 .nickname(nickname)
                 .address(address)
                 .gender(gender)
-                .build();
-    }
-
-
-    public Member toEntity(String savePath) {
-        return Member.builder()
-                .email(email)
-                .nickname(nickname)
-                .address(address)
-                .gender(gender)
-                .profileImage(savePath)
                 .build();
     }
 
