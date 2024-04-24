@@ -24,7 +24,7 @@ public class Member {
 
 
     public enum LoginMethod{
-        COMMON,KAKAO
+        COMMON, KAKAO, NAVER, GOOGLE
     }
 
 }

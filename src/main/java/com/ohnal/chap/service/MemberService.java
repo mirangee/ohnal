@@ -120,12 +120,21 @@ public class MemberService {
         LoginUserResponseDTO dto = LoginUserResponseDTO.builder()
                 .email(foundMember.getEmail())
                 .nickname(foundMember.getNickname())
-                .profile(foundMember.getProfileImage())
                 .loginMethod(foundMember.getLoginMethod().toString())
                 .address(foundMember.getAddress())
                 .gender(foundMember.getGender())
                 .regDate(String.valueOf(foundMember.getRegDate()))
                 .build();
+
+        // 프로필 사진 설정 여부에 따라 다른 이미지 경로 적용
+        if(foundMember.getProfileImage() == null) { // 설정된 이미지 정보가 없으면
+            dto.setProfile("/assets/img/anonymous-image.png"); // 기본 프로필 사진
+        } else if(foundMember.getProfileImage().contains("/profile")) { // 설정한 이미지 정보가 있고, profile 경로로 시작하면
+            dto.setProfile("/display" + foundMember.getProfileImage());
+        } else { // profile 경로로 시작하지 않음(예: 카카오 로그인)
+            dto.setProfile(foundMember.getProfileImage());
+        }
+
         // 세션에 로그인한 회원 정보를 저장
         session.setAttribute(LOGIN_KEY, dto);
         // 세션 수명 설정

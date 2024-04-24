@@ -115,5 +115,13 @@ pointer:cursor;
     width: 300px;
     border-radius: 5px;
     height:51px;
-    }
+}
 
+#googlelogo {
+    display: block;
+    text-align: center;
+    border-radius: 5px;
+    width: 300px;
+    height: 45px;
+    margin-top:10px;
+}

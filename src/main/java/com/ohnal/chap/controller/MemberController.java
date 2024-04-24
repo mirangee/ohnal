@@ -68,19 +68,23 @@ public class MemberController {
 
     @PostMapping("/sign-up")
     public String signUp(SignUpRequestDTO dto) {
-        log.info("/members/sign-up: POST");
         
-        if (!rootPath.contains("/profile")) {
-            rootPath = rootPath + "/profile";
-        }
+        if (dto.getProfileImage().toString().contains("org.springframework.web")) { // 프사 등록 안 했을 시
+            dto.setProfileImage(null);
+            dto.setLoginMethod(Member.LoginMethod.COMMON);
+            memberService.join(dto, null);
+        } else {
+            if (!rootPath.contains("/profile")) {
+                rootPath = rootPath + "/profile";
+            }
+            String savePath = "/profile" + FileUtils.uploadFile(dto.getProfileImage(), rootPath);
+            log.info("save-path: {}", savePath);
+
+            // 일반 방식(우리사이트를 통해)으로 회원가입
+            dto.setLoginMethod(Member.LoginMethod.COMMON);
+            memberService.join(dto, savePath);
+        }       
         
-        String savePath = "/profile" + FileUtils.uploadFile(dto.getProfileImage(), rootPath);
-        log.info("save-path: {}", savePath);
-
-        // 일반 방식(우리사이트를 통해)으로 회원가입
-        dto.setLoginMethod(Member.LoginMethod.COMMON);
-
-        memberService.join(dto, savePath);
         return "redirect:/members/sign-in";
     }
 
