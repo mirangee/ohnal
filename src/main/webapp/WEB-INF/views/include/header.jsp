@@ -43,25 +43,5 @@
                 </c:if>
             </ul>
         </nav>
-
-        <script>
-            // 프로필 사진 렌더링 즉시 실행 함수
-            <%--const profileIncludes = ("${login.profile}").includes("/profile"); // 카카오 로그인 회원이 프로필 사진 수정 이력이 있으면 경로 변경--%>
-            <%--(function( ){--%>
-            <%--    if(${memberInfo.profile eq null}) {--%>
-            <%--        document.getElementById('image-preview').setAttribute("src", "/assets/img/anonymous-image.png");--%>
-            <%--    } else {--%>
-            <%--        if(${memberInfo.loginMethod != 'COMMON'}) {--%>
-            <%--            if (profileIncludes === true) {--%>
-            <%--                document.getElementById('image-preview').setAttribute("src", "/display${memberInfo.profile}");--%>
-            <%--            } else {--%>
-            <%--                document.getElementById('image-preview').setAttribute("src", "${memberInfo.profile}");--%>
-            <%--            }--%>
-            <%--        } else {--%>
-            <%--            document.getElementById('image-preview').setAttribute("src", "/display${memberInfo.profile}");--%>
-            <%--        }--%>
-            <%--    }--%>
-            <%--} )( );--%>
-        </script>
     </header>
     <!-- //header -->

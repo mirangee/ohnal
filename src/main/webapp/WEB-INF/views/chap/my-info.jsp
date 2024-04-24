@@ -169,26 +169,6 @@
   <%@include file="../include/footer.jsp"%>
 
   <script>
-    // 프로필 사진 렌더링 즉시 실행 함수
-    <%--const profileIncludes = ("${login.profile}").includes("/profile"); // 카카오 로그인 회원이 프로필 사진 수정 이력이 있으면 경로 변경--%>
-    <%--(function( ){--%>
-    <%--  console.log('즉시실행 함수가 실행되었습니다!')--%>
-    <%--  if(${memberInfo.profile == null}) {--%>
-    <%--    console.log('profile image가 null이므로 src 재세팅')--%>
-    <%--    document.getElementById('image-preview').setAttribute("src", "/assets/img/anonymous-image.png");--%>
-    <%--  } else {--%>
-    <%--    if(${memberInfo.loginMethod != 'COMMON'}) {--%>
-    <%--      if (profileIncludes === true) {--%>
-    <%--        document.getElementById('image-preview').setAttribute("src", "/display${memberInfo.profile}");--%>
-    <%--      } else {--%>
-    <%--        document.getElementById('image-preview').setAttribute("src", "${memberInfo.profile}");--%>
-    <%--      }--%>
-    <%--    } else {--%>
-    <%--      document.getElementById('image-preview').setAttribute("src", "/display${memberInfo.profile}");--%>
-    <%--    }--%>
-    <%--  }--%>
-    <%--} )( );--%>
-
     // 비밀번호 변경 버튼 누르면 비밀번호 변경 페이지로 이동
     document.getElementById('change-password').onclick = () => {
         location.replace("/members/changePassword");
