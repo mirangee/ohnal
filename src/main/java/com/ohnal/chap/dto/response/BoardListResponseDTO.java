@@ -13,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 @Getter @ToString
 @EqualsAndHashCode
 public class BoardListResponseDTO {
-    
+
     private int boardNo;
     private String nickname;
     private String content;
@@ -26,6 +26,8 @@ public class BoardListResponseDTO {
     private String viewCount;
     private String profileImage;
     private String email;
+    private int likeNo;
+    private String likeEmail;
 
     public BoardListResponseDTO(Board board) {
         this.boardNo = board.getBoardNo();
@@ -40,8 +42,10 @@ public class BoardListResponseDTO {
         this.viewCount = makePrettierViewCount(board.getViewCount());
         this.profileImage = board.getProfileImage();
         this.email = board.getEmail();
+        this.likeNo = board.getLikeNo();
+        this.likeEmail = board.getLikeEmail();
     }
-    
+
     // 뷰카운트 표시방식 변경
     private String makePrettierViewCount(int viewCount) {
         String result;
@@ -56,19 +60,19 @@ public class BoardListResponseDTO {
         }
         return result;
     }
-    
-    // 시간 표시 방식 변경
+
+    // 시간 표기
     public static String makePrettierDateString(LocalDateTime regDate) {
-        
+
         // 현재 시간
         LocalDateTime currentTime = LocalDateTime.now();
-        
+
         // 두 시간 사이의 차이 계산
         Duration duration = Duration.between(regDate, currentTime);
         long seconds = duration.toSeconds();
         long minutes = duration.toMinutes();
         long hoursDifference = duration.toHours();
-        
+
         String time = "";
         if (seconds < 60) {
             time = seconds + "초 전";
@@ -81,11 +85,11 @@ public class BoardListResponseDTO {
         } else {
             time = ChronoUnit.WEEKS.between(regDate, currentTime) + "주 전";
         }
-        
+
         return time;
     }
-    
-    // likeCount 표시방식 변경
+
+    // 좋아요수 표기
     public static String makePrettierLikeCount(int likeCount) {
         String result;
         if (likeCount == 1000) {
@@ -99,7 +103,8 @@ public class BoardListResponseDTO {
         }
         return result;
     }
-    
+
+    // 댓글 수 표기
     public static String makePrettierReplyCount(int replyCount) {
         String result;
         if (replyCount > 1000) {
@@ -113,5 +118,5 @@ public class BoardListResponseDTO {
         }
         return result;
     }
-    
+
 }

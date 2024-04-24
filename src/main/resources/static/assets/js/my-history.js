@@ -1,3 +1,5 @@
+
+
 // HTML 문서의 로딩이 완료되었을 때, 해당 함수를 실행
 document.addEventListener("DOMContentLoaded", function () {
     // elements
@@ -23,26 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-
-console.log('my-history 페이지에 접속 완료')
-// 내가 쓴 글 버튼(div)을 누르면 내가 쓴 글 목록이 조회된다.
-function getMyPosts() {
-    fetch('/members/my-history/' + email)
-        .then((response) => response.json())
-        .then(data => console.log(data));
-
-
-
-
-}
-
-// 내가 쓴 댓글 버튼(div)을 누르면 내가 쓴 댓글 목록이 모두 조회된다.
-function getMyReplyPosts() {
-    console.log("내가 쓴 댓글 목록 모두 조회 버튼 눌렀다.");
-    fetch('/members/my-history/my-write-reply/' + email)
-        .then((response) => response.json())
-        .then(data => console.log(data));
-}
 
 // 내가 좋아요한 글 버튼(div)을 누르면 내가 좋아요한 글 목록이 조회된다.
 function getLikedPosts() {
@@ -142,12 +124,6 @@ function renderReplies(replyList) {
     } else {
         tag += "<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>";
     }
-
-    // var btn = document.getElementById("like")
-
-    //   btn.addEventListener('click',function(){
-    //             btn.classList.toggle('active')
-    //     })
 
     $replyWrapper.innerHTML = tag;
 

@@ -50,6 +50,7 @@ public class MemberService {
         memberMapper.save(dto.toEntity(encoder, savePath));
     }
 
+
     // 로그인 검증 처리
     public LoginResult authenticate(LoginRequestDTO dto,
                                     HttpSession session,
