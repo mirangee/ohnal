@@ -136,6 +136,8 @@ public class MemberService {
             dto.setProfile(foundMember.getProfileImage());
         }
 
+        log.info(dto.toString());
+
         // 세션에 로그인한 회원 정보를 저장
         session.setAttribute(LOGIN_KEY, dto);
         // 세션 수명 설정

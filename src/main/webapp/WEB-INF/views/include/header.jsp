@@ -20,17 +20,17 @@
             </div>
 
             <%-- 햄버거 버튼을 감싸고 있는 --%>
-            <a href="#" class="menu-open">
+            <div class="menu-open">
                 <%-- 햄버거 버튼 --%>
                 <span class="lnr lnr-menu"></span>
-            </a>
+            </div>
         </div>
 
         <%-- 햄버거 버튼 클릭시 우측에서 나타나는 메뉴 슬라이드 --%>
         <nav class="gnb">
-            <a href="#" class="close">
+            <div class="close">
                 <span class="lnr lnr-cross"></span>
-            </a>
+            </div>
             <ul>
                 <li><a href="/board/list">OOTD 게시판</a></li>
 
@@ -46,5 +46,6 @@
                 </c:if>
             </ul>
         </nav>
+
     </header>
     <!-- //header -->
