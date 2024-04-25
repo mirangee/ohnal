@@ -3,7 +3,6 @@ import com.ohnal.chap.common.Page;
 import com.ohnal.chap.common.Search;
 import com.ohnal.chap.controller.ReplyPostRequestDTO;
 import com.ohnal.chap.dto.request.BoardLikeRequestDTO;
-import com.ohnal.chap.dto.request.BoardWriteRequestDTO;
 import com.ohnal.chap.dto.response.BoardListResponseDTO;
 import com.ohnal.chap.dto.response.BoardReplyResponseDTO;
 import com.ohnal.chap.dto.response.BoardWriteDTO;
@@ -155,5 +154,16 @@ public class BoardService {
     // 내가 작성한 댓글 수를 가진 게시물을 불러오는 쪽으로 택함.
     public int getMyCommentsCount(String email) {
         return mapper.getMyCommentsCount(email);
+    }
+
+    public List<BoardListResponseDTO> findBestOOTD(String email) {
+        List<BoardListResponseDTO> dtoList = new ArrayList<>();
+        List<Board> boardList = mapper.findBestOOTD(email);
+        for (Board board : boardList) {
+            BoardListResponseDTO dto = new BoardListResponseDTO(board);
+            dtoList.add(dto);
+        }
+
+        return dtoList;
     }
 }

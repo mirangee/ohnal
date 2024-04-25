@@ -1,8 +1,14 @@
 package com.ohnal.chap.controller;
 
+import com.ohnal.chap.dto.response.BoardListResponseDTO;
 import com.ohnal.chap.dto.response.WeatherInfoResponseDTO;
+import com.ohnal.chap.entity.Board;
+import com.ohnal.chap.service.BoardService;
 import com.ohnal.chap.service.WeatherService;
+import com.ohnal.util.LoginUtils;
 import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,20 +20,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class WeatherController {
     private final WeatherService weatherService;
-    private final ServletRequest httpServletRequest;
+    private final BoardService boardService;
 
     // 메인 홈페이지 접속 url 매핑
     @GetMapping ("/index")
-    public String veiwIndex(Model model) {
+    public String veiwIndex(Model model, HttpSession session) {
         log.info("/index 요청 들어옴");
         String area1 = "서울특별시";
         String area2 = "중구";
+
+        String email = LoginUtils.getCurrentLoginMemberEmail(session);
+        log.info("email: {}", email);
 
         WeatherInfoResponseDTO dto = weatherService.getShortTermForecast(area1.trim(), area2.replaceAll(" ", ""));
 
@@ -39,8 +49,10 @@ public class WeatherController {
         int maxInt = (int)dto.getMaxTemperature();
         int minInt = (int)dto.getMinTemperature();
 
+        // BEST OOTD
+       List<BoardListResponseDTO> bList = boardService.findBestOOTD(email);
 
-
+        model.addAttribute("bList", bList);
         model.addAttribute("dto", dto);
         model.addAttribute("maxInt", maxInt);
         model.addAttribute("minInt", minInt);

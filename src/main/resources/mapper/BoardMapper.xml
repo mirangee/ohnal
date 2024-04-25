@@ -82,7 +82,7 @@
         LEFT OUTER JOIN tbl_member B
         ON A.email = B.email
         WHERE board_no = #{bno}
-        ORDER BY reply_no DESC
+        ORDER BY reply_no
     </select>
 
     <insert id="replySave">
@@ -170,5 +170,17 @@
         DELETE FROM tbl_like
         WHERE board_no = #{bno} AND like_email = #{email}
     </delete>
+
+    <select id="findBestOOTD" resultType="board">
+        SELECT
+            A.*, B.profile_image, C.like_no, C.like_email
+        FROM tbl_board A
+        LEFT OUTER JOIN tbl_member B
+        ON A.email = B.email
+        LEFT OUTER JOIN tbl_like C
+        ON A.board_no = C.board_no AND C.like_email = #{email}
+        ORDER BY like_count DESC
+        LIMIT 0, 8
+    </select>
 
 </mapper>

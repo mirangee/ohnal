@@ -57,4 +57,6 @@ public interface BoardMapper {
     // my-history 에서 작성 댓글 버튼 누를 때, 작동하는 sql문
     // --> 페이지네이션을 위해 내가 작성한 댓글을 보유한 게시물 개수를 조회하는 sql문
     int getMyCommentsCount(String email);
+
+    List<Board> findBestOOTD(String email);
 }
