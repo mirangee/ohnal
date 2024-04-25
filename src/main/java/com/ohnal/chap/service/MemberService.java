@@ -3,6 +3,8 @@ package com.ohnal.chap.service;
 import com.ohnal.chap.dto.request.AutoLoginDTO;
 import com.ohnal.chap.dto.request.LoginRequestDTO;
 import com.ohnal.chap.dto.request.ModifyRequestDTO;
+import com.ohnal.chap.dto.request.ModifyRequestDTO;
+import com.ohnal.chap.dto.request.NaverSignUpRequestDTO;
 import com.ohnal.chap.dto.request.SignUpRequestDTO;
 import com.ohnal.chap.dto.response.LoginUserResponseDTO;
 import com.ohnal.chap.entity.Member;
@@ -50,6 +52,10 @@ public class MemberService {
         memberMapper.save(dto.toEntity(encoder, savePath));
     }
 
+    public void snsJoin(NaverSignUpRequestDTO dto, String savePath) {
+
+        memberMapper.save(dto.toEntity(encoder, savePath));
+    }
 
     // 로그인 검증 처리
     public LoginResult authenticate(LoginRequestDTO dto,
