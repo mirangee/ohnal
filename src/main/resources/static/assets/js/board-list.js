@@ -48,7 +48,10 @@ $cardContainer.onclick = e => {
 
       if (e.target.matches('button')) {
         console.log("button click!");
-        confirm("정말 삭제하시겠습니까?");
+        if (!confirm("정말 삭제하시겠습니까?")) {
+          return;
+        }
+
         fetch('/board/delete/' + bno)
           .then(() => {
             document.getElementById('submitBtn').click();

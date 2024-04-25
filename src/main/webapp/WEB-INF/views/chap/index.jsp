@@ -154,9 +154,6 @@
         <div class="card-container">
             <!-- 카드 복사 -->
             <c:forEach var="b" items="${bList}">
-<%--                <div class="swiper">--%>
-<%--                    <div class="swiper-wrapper">--%>
-<%--                        <div class="right-down swiper-slide">--%>
                             <div class="card-wrapper">
                                 <section class="card select-card" data-bno="${b.boardNo}" data-email="${login.email}">
                                     <div class="card-title-wrapper">
@@ -206,11 +203,6 @@
                                     </div>
                                 </section>
                             </div>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <!-- If we need pagination -->--%>
-<%--                    <div class="swiper-pagination"></div>--%>
-<%--                </div>--%>
             </c:forEach>
             <!-- 카드 복사 끝 -->
             <!-- 카드 끝 -->
