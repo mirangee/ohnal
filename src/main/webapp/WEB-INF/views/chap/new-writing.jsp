@@ -77,7 +77,6 @@
   <%@include file="../include/footer.jsp"%>
   <script>
     // 날씨 옵션 메뉴 제공하는 JS
-    let flag = false;
     var cat1_num = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
     var cat1_name = new Array('서울', '부산', '대구', '인천', '광주', '대전', '울산', '강원', '경기', '경남', '경북', '전남', '전북', '제주', '충남', '충북');
     var cat2_num = new Array();
@@ -123,83 +122,119 @@
       sel.options[0] = new Option('시,군,구를 선택하세요', '', '', 'true');
       for (i = 0; i < name.length; i++) {
         sel.options[i + 1] = new Option(name[i], val[i]);
-        console.log(sel.options[i+1]);
-        <%--if (${login.address != null || login.adress != ''}) {--%>
-        <%--  sel.options[30].selected = true;--%>
-        <%--}--%>
       }
     }
 
+    const $valueArea1 = document.getElementById('valueArea1');
+    const $valueArea2 = document.getElementById('valueArea2');
+    const $area1 = document.querySelector('.h_area1');
+    const $area2 = document.querySelector('.h_area2');
+    let targetNum = 0;
+    let targetNum2 = 0;
 
+    // 사용자가 선택 안 했을 시 '서울시' '중구'로 기본 세팅
+    $valueArea1.setAttribute("value", '서울특별시');
+    $valueArea2.setAttribute("value", '중구');
+
+    // 사용자가 직접 select 옵션을 선택했을 시 작동하는 이벤트
     document.querySelector('.h_area2').onchange = () => {
       const $area1 = document.querySelector('select[name=h_area1]');
       const $area2 = document.querySelector('select[name=h_area2]');
-      const $valueArea1 = document.getElementById('valueArea1');
-      const $valueArea2 = document.getElementById('valueArea2');
-
       $valueArea1.setAttribute("value", $area1.options[$area1.selectedIndex].textContent);
       // value를 지목하면 숫자가 오므로 option 중 선택된 인텍스의 텍스트값을 가지고 오는 문법을 사용한다.
       $valueArea2.setAttribute("value", $area2.options[$area2.selectedIndex].textContent);
     };
 
-    // 사용자가 설정한 주소를 기본값으로 설정하는 세팅
-    const $area1 = document.querySelector('.h_area1');
-    if(${login.address != null || login.address != ''}) {
-      $area1.onchange();
-    }
-    const address = '${login.address}';
-    const area = address.split(" ");
-    const area1 = area[0];
-    const area2 = area[1];
-    let targetNum = 0;
+    // login 사용자의 주소 정보가 있을 시 작동하는 코드
+    if (${login.address != ''} && ${login.address != null}) {
+      console.log('사용자의 주소 정보가 있습니다. 주소 정보로 기본 세팅합니다.');
 
-    console.log(area1);
-    console.log(area2);
+      // 사용자가 설정한 주소를 기본값으로 설정하는 세팅
+      const address = '${login.address}';
+      console.log(address);
+      const area = address.split(" ");
+      const area1 = area[0];
+      const area2 = area[1];
 
-    // area1 설정하는 로직
+      // area1 설정하는 로직(주소 API에서 제공하는 주소는 '충북', 우리 DB 주소는 '충청북도'이므로 정규표현식으로 문자열 비교
+      let start = area1.charAt(0);
+      let middle = area1.charAt(1);
 
+      let pattern = new RegExp("^" + start + ".*" + middle);
+      console.log(pattern);
 
-     let start = area1.charAt(0);
-     let middle = area1.charAt(1);
+      // select 태그의 모든 option을 순회
+      for (let i = 0; i < $area1.options.length; i++) {
+        // 현재 option의 textContent
+        const optionText = $area1.options[i].textContent;
 
-    let pattern = new RegExp("^" + start + ".*" + middle);
-    console.log(pattern);
-
-    // select 태그의 모든 option을 순회
-    for (let i = 0; i < $area1.options.length; i++) {
-      // 현재 option의 textContent
-      const optionText = $area1.options[i].textContent;
-
-      // textContent 비교
-      if (pattern.test(optionText)) {
-        console.log('textContent가 일치하는 option을 찾았습니다: ', $area1.options[i].value);
-
-        $area1.options[i].setAttribute("selected", "selected");
-        targetNum = i;
-        break; // 찾았으면 반복문 종료
-      }
-    }
-
-    // area2 설정하는 로직
-    const $area2 = document.querySelector('.h_area2');
-    console.log(targetNum);
-    console.log(cat2_name[targetNum].length);
-
-    // area1이 설정되었을 시 area2를 얻기 위한 배열 순회
-    for (let i = 0; i < cat2_name[targetNum].length; i++) {
-
-      if (cat2_name[targetNum][i] === area2) {
-        console.log('textContent가 일치하는 지역2를 찾았습니다: ', cat2_name[targetNum][i]);
-        console.log('지역2의 번호는 다음과 같습니다', cat2_num[targetNum][i]);
-        const targetNum2 = cat2_num[targetNum][i];
-
-        for(let j = 0; j < selectElement.options.length; j++) {
-          if ($area2.options[j].value === targetNum2) {
-            $area2.options[j].setAttribute("selected", "selected");
-            break;
-          }
+        // textContent 비교
+        if (pattern.test(optionText)) {
+          console.log('textContent가 일치하는 option을 찾았습니다: ', $area1.options[i].value);
+          console.log('기본으로 세팅될 area1 textContent: ', $area1.options[i].textContent);
+          $valueArea1.setAttribute("value", $area1.options[i].textContent); // form에 전송될 area1을 해당 지역명으로 세팅
+          $area1.options[i].setAttribute("selected", "selected"); // 사용자가 해당 지역명을 selected된 채로 보도록 세팅
+          targetNum = i;
+          break; // 찾았으면 반복문 종료
         }
-        break; // 찾았으면 반복문 종료
+      }
+
+      // area2 설정하는 로직
+      // area1이 설정되었을 시 area2를 얻기 위한 배열 순회
+      for (let i = 0; i < cat2_name[targetNum].length; i++) {
+
+        if (cat2_name[targetNum][i] === area2) { // 사용자가 주소 설정한 area2와 select 옵션들을 비교
+          console.log('지역2가 배열의 몇 번째에 있나요?' + i + '번째 인덱스에 있습니다');
+          targetNum2 = i;
+          break; // 찾았으면 반복문 종료
+        }
+      }
+
+      console.log('첫번째 targetNum은 '+ targetNum);
+      console.log('두번째 targetNum은 '+ targetNum2)
+      setDefault(targetNum, targetNum2, $area2);
+
+      // function setDefault(key, sel) {
+      //   console.log('setDefault 호출됨!')
+      //   if (key == '') return;
+      //   var name = cat2_name[key];
+      //   var val = cat2_num[key];
+      //   for (i = sel.length - 1; i >= 0; i--)
+      //     sel.options[i] = null;
+      //   sel.options[0] = new Option('시,군,구를 선택하세요', '', '', 'true');
+      //   for (i = 0; i < name.length; i++) {
+      //     sel.options[i + 1] = new Option(name[i], val[i]);
+      //     if(i === targetNum2) { // targetNum2을 바꾸면 원하는 것으로 selected가 된다.
+      //       sel.options[i+1].selected = true;
+      //       console.log('기본으로 세팅될 area2 textContent: ', sel.options[i+1].textContent);
+      //       $valueArea2.setAttribute("value", sel.options[i+1].textContent);
+      //       break;
+      //     }
+      //   }
+      // }
+    } else {
+      console.log('주소가 없는 경우 서울시 중구를 기본으로 설정합니다');
+      // 서울시는 첫번째 select의 1번 인덱스, 중구는 두번째 select의 23번 인덱스이기 때문에 함수에 1, 23을 대입
+      $area1.options[1].setAttribute("selected", "selected");
+      setDefault(1, 23, $area2);
+    }
+
+    function setDefault(key, targetNum2, sel) {
+      console.log('setDefault 호출됨!')
+      if (key == '') return;
+      var name = cat2_name[key];
+      var val = cat2_num[key];
+      for (i = sel.length - 1; i >= 0; i--)
+        sel.options[i] = null;
+      sel.options[0] = new Option('시,군,구를 선택하세요', '', '', 'true');
+      for (i = 0; i < name.length; i++) {
+        sel.options[i + 1] = new Option(name[i], val[i]);
+        if(i === targetNum2) { // targetNum2을 바꾸면 원하는 것으로 selected가 된다.
+          sel.options[i+1].selected = true;
+          console.log('기본으로 세팅될 area2 textContent: ', sel.options[i+1].textContent);
+          $valueArea2.setAttribute("value", sel.options[i+1].textContent);
+          break;
+        }
       }
     }
 
