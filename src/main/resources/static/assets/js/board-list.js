@@ -29,7 +29,6 @@ const $cardContainer = document.querySelector('.card-container');
 
 $cardContainer.onclick = e => {
 
-  const $cardWrapper = e.target.closest('.card-wrapper');
   const $card = e.target.closest('.select-card');
   if ($card) {
     const $email = $card.dataset.email;
@@ -59,9 +58,8 @@ $cardContainer.onclick = e => {
 
         // 글 삭제
         fetch('/board/delete/' + bno)
-          .then(res => {
-            console.log(res);
-            $cardWrapper.style.display = 'none';
+          .then(() => {
+            document.getElementById('submitBtn').click();
           });
       } else {
 
@@ -89,10 +87,10 @@ $cardContainer.onclick = e => {
             document.body.style.overflow = 'hidden';
 
           });
-          
-                document.getElementById('modalBtn').click();
-                fetchGetReplies(bno);
       }
+
+      document.getElementById('modalBtn').click();
+      fetchGetReplies(bno);
 
     };
 

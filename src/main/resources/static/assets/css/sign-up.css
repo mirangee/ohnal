@@ -1,27 +1,24 @@
 @font-face {
-  font-family: 'TAEBAEKmilkyway';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/TAEBAEKmilkyway.woff2') format('woff2');
+  font-family: 'GOSEONGGEUMGANGNURI';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404-2@1.0/GOSEONGGEUMGANGNURI.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
 
 body{
-  background: linear-gradient(to left bottom, #fff7d6, pink, #fff7d6);
-  font-weight: 700;
-}
-button {
-  font-weight: 600;
+  background-color: black;
+
+  
 }
 strong {
-  color: black;
+  color: cornsilk;
   font-size:23px;
  }
- 
 
 .container {
     margin-top: 120px;
-    font-family:'TAEBAEKmilkyway';
-    /* background: linear-gradient(to left bottom, #fff7d6, pink, #fff7d6); */
+    font-family:'GOSEONGGEUMGANGNURI';
+    background-color: black;
     letter-spacing: 3px;
 }
 
@@ -49,12 +46,6 @@ p.font {
   border-radius: 10px;
   margin-top: 7px;
   color: black;
-  box-shadow: 2px 2px 5px #8d8383;
-  font-weight: 700;
-  
-}
-#sample6_address{
-  margin-bottom: 1px;
 }
 
 .address {
@@ -101,7 +92,6 @@ p.font {
   border-radius:10px;
   box-shadow:inset 0 0 10px 2px black,0 0 10px 2px black;
   margin-right: 5px;
-  font-weight: 600;
 }
 #emailAuth:hover{
   
@@ -188,13 +178,10 @@ width:300px;
   border: 3px solid white;
   border-radius:10px;
   box-shadow:inset 0 0 10px 2px black,0 0 10px 2px black;
-  font-weight: 600;
+
 }
 
 .addressbtn:hover {
   box-shadow:inset 0 0 10px 2px blueviolet,0 0 10px 2px blueviolet;
   transition: 0.5s;
-}
-.address {
-  font-weight: 700;
 }

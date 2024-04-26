@@ -19,21 +19,19 @@
                 </c:if>
             </div>
 
-             <%-- 햄버거 버튼을 감싸고 있는 --%>
+            <%-- 햄버거 버튼을 감싸고 있는 --%>
             <div class="menu-open">
                 <%-- 햄버거 버튼 --%>
                 <span class="lnr lnr-menu"></span>
             </div>
-        </div> 
-        
-    
+        </div>
 
         <%-- 햄버거 버튼 클릭시 우측에서 나타나는 메뉴 슬라이드 --%>
         <nav class="gnb">
             <div class="close">
                 <span class="lnr lnr-cross"></span>
             </div>
-            <ul class="linkcolor">
+            <ul>
                 <li><a href="/board/list">OOTD 게시판</a></li>
 
                 <c:if test="${empty login}"> <!-- el 문법임. login이 null이라면 ${login == null}-->
@@ -49,7 +47,5 @@
             </ul>
         </nav>
 
-       
-    
     </header>
     <!-- //header -->
