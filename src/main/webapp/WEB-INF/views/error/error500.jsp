@@ -60,7 +60,7 @@
     
 </head>
 <body>
-    <div class="catbox"><img src="./cat.jpg" alt="cat" class="cat"></div>
+    <div class="catbox"><img src="/assets/img/cat.jpg" alt="cat" class="cat"></div>
    <div class="container">
     <p class="text">I'm Sorry! <br> 다시 한번 시도해주세요</p>
     <a href="http://localhost:8282/index" class="alink">메인페이지 이동</a>

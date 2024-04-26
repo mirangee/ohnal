@@ -145,6 +145,8 @@ public class MemberController {
         LoginUserResponseDTO dto = (LoginUserResponseDTO) session.getAttribute(LOGIN_KEY);
         if (dto.getLoginMethod().equals("KAKAO")) {
             memberService.kakaoLogout(dto, session);
+        } else if (dto.getLoginMethod().equals("NAVER")) {
+            memberService.naverLogout(dto, session);
         }
 
         // 세션에서 로그인 정보 기록 삭제

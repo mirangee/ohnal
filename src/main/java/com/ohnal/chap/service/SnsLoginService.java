@@ -36,6 +36,7 @@ public class SnsLoginService {
 
 
         String accessToken = getKakaoAccessToken(params);
+        session.setAttribute("access_token", accessToken);
 
         KakaoUserResponseDTO dto = getKakaoUserInfo(accessToken);
         log.info(dto.toString());
