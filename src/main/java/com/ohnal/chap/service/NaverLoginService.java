@@ -44,10 +44,9 @@ public class NaverLoginService {
                                     .email(email)
                                     .password("0000")
                                     .nickname(dto.getResponse().getNickname())
-                                    .profileImage(dto.getResponse().getProfileImage())
                                     .loginMethod(Member.LoginMethod.NAVER)
                                     .build(),
-                            null
+                            dto.getResponse().getProfileImage()
                     );
 
         }
