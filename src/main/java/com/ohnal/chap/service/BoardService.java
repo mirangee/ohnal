@@ -3,7 +3,7 @@ import com.ohnal.chap.common.Page;
 import com.ohnal.chap.common.Search;
 import com.ohnal.chap.controller.ReplyPostRequestDTO;
 import com.ohnal.chap.dto.request.BoardLikeRequestDTO;
-import com.ohnal.chap.dto.request.BoardWriteRequestDTO;
+import com.ohnal.chap.dto.request.BoardReplyDeleteRequestDTO;
 import com.ohnal.chap.dto.response.BoardListResponseDTO;
 import com.ohnal.chap.dto.response.BoardReplyResponseDTO;
 import com.ohnal.chap.dto.response.BoardWriteDTO;
@@ -157,6 +157,17 @@ public class BoardService {
         return mapper.getMyCommentsCount(email);
     }
 
+    public List<BoardListResponseDTO> findBestOOTD(String email) {
+        List<BoardListResponseDTO> dtoList = new ArrayList<>();
+        List<Board> boardList = mapper.findBestOOTD(email);
+        for (Board board : boardList) {
+            BoardListResponseDTO dto = new BoardListResponseDTO(board);
+            dtoList.add(dto);
+        }
+
+        return dtoList;
+    }
+
     public List<BoardListResponseDTO> findMyLikePosts(String email) {
         List<BoardListResponseDTO> dtoList = new ArrayList<>();
 
@@ -175,5 +186,16 @@ public class BoardService {
 
     public int getMyLikeCount(String email) {
         return mapper.getMyLikeCount(email);
+    }
+
+    public void deleteReply(int rno, int bno) {
+        mapper.deleteReply(rno);
+        mapper.updateCount(bno, "replyDelete");
+    }
+
+    public boolean findReply(BoardReplyDeleteRequestDTO dto) {
+
+        return mapper.findReply(dto);
+
     }
 }

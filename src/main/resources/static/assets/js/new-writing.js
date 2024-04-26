@@ -22,5 +22,3 @@ $fileInput.onchange = e => {
 
 
 
-
-

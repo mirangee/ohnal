@@ -4,7 +4,6 @@ import com.ohnal.chap.dto.request.AutoLoginDTO;
 import com.ohnal.chap.dto.request.LoginRequestDTO;
 import com.ohnal.chap.dto.request.ModifyRequestDTO;
 import com.ohnal.chap.dto.request.NaverSignUpRequestDTO;
-import com.ohnal.chap.dto.request.ModifyRequestDTO;
 import com.ohnal.chap.dto.request.SignUpRequestDTO;
 import com.ohnal.chap.dto.response.LoginUserResponseDTO;
 import com.ohnal.chap.entity.Member;
@@ -15,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -26,6 +26,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.WebUtils;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 import static com.ohnal.chap.service.LoginResult.NO_PW;
@@ -42,6 +43,13 @@ public class MemberService {
 
     private final MemberMapper memberMapper;
     private final PasswordEncoder encoder;
+
+    @Value("${sns.naver.client-id}")
+    private String naverClientId;
+
+    @Value("${sns.naver.client-secret}")
+    private String naverClientSecret;
+
 
     // 회원 가입 처리 서비스
     public void join(SignUpRequestDTO dto, String savePath) {
@@ -127,7 +135,6 @@ public class MemberService {
         LoginUserResponseDTO dto = LoginUserResponseDTO.builder()
                 .email(foundMember.getEmail())
                 .nickname(foundMember.getNickname())
-                .profile(foundMember.getProfileImage())
                 .loginMethod(foundMember.getLoginMethod().toString())
                 .address(foundMember.getAddress())
                 .gender(foundMember.getGender())
@@ -195,6 +202,7 @@ public class MemberService {
         String requestUri = "https://kapi.kakao.com/v1/user/logout";
 
         String accessToken = (String) session.getAttribute("access_token");
+        log.info("access_Token 여부: {}", accessToken);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
@@ -210,6 +218,8 @@ public class MemberService {
                 new HttpEntity<>(params, headers),
                 Map.class
         );
+
+        log.info("로그아웃 시도하는 email: {}", dto.getEmail());
 
         Map<String, Object> responseJSON = (Map<String, Object>) responseEntity.getBody();
         log.info("응답 데이터: {}", responseJSON); // 로그아웃하는 사용자의 id
@@ -227,5 +237,31 @@ public class MemberService {
 
     public void modifyProfileImage(String email, String savePath) {
         memberMapper.modifyProfileImage(email, savePath);
+    }
+
+    public void naverLogout(LoginUserResponseDTO dto, HttpSession session) {
+
+        String accessToken = (String) session.getAttribute("access_token");
+        log.info("access_Token 여부: {}", accessToken);
+
+        String requestUri = "https://nid.naver.com/oauth2.0/token?grant_type=delete" +
+                "&client_id=" + naverClientId +
+                "&client_secret=" + naverClientSecret +
+                "&access_token=" + accessToken +
+                "&service_provider=NAVER";
+
+        log.info("로그아웃 시도하는 email: {}", dto.getEmail());
+
+        RestTemplate template = new RestTemplate();
+        ResponseEntity<String> responseEntity = template.exchange(
+                requestUri,
+                HttpMethod.GET,
+                null,
+                String.class
+        );
+
+
+        String responseJSON = responseEntity.getBody();
+        log.info("응답 데이터: {}", responseJSON); // SUCCESS 나오면 성공
     }
 }
