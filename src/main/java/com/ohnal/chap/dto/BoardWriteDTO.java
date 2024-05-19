@@ -1,4 +1,4 @@
-package com.ohnal.chap.dto.response;
+package com.ohnal.chap.dto;
 
 import lombok.*;
 
@@ -8,8 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class BoardWriteDTO {
-
-    private String nickname;
+    
     private String content;
     private String image;
     private String locationTag;

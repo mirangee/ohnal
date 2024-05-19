@@ -13,11 +13,29 @@
 <body>
     <%@include file="../include/header.jsp"%>
 
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+    </div>
     <!-- BEST OOTD 게시판 영역 -->
-
-
-    <!-- 카드 시작 -->
-    <div class="card-container">
 
         <div class="top-wrapper">
             <input id="keywordValue" type="text" value="${s.keyword}" hidden></input>
@@ -33,16 +51,22 @@
             <a href="/board/write" class="upload-btn">새 글쓰기</a>
         </div>
 
+        <a class="refresh" href="/board/list?pageNo=${maker.page.pageNo}&amount=${s.amount}&keyword=${s.keyword}" hidden></a>
+
+    <!-- 카드 시작 -->
+    <div class="card-container" data-auth="${login.auth}">
+
+
         <!-- 카드 복사 -->
         <c:forEach var="b" items="${bList}">
-            <div class="card-wrapper">
+            <div class="card-wrapper box">
                 <section class="card select-card" data-bno="${b.boardNo}" data-email="${login.email}">
                     <div class="card-title-wrapper">
                         <div class="profile-box">
                             <img src="${b.profileImage}" alt="프사">
                         </div>
                         <span class="card-account">${b.nickname}</span>
-                        <c:if test="${login.email == b.email}"><button class="board-del-btn" type="button">삭제</button>
+                        <c:if test="${login.email == b.email || login.auth == 'ADMIN'}"><button class="board-del-btn" type="button">삭제</button>
                         </c:if>
                     </div>
 
@@ -113,10 +137,18 @@
                 </c:if>
 
                 <c:forEach var="i" begin="${maker.begin}" end="${maker.end}">
-                    <li data-page-num="${i}" class="page-item">
-                        <a class="page-link"
-                            href="/board/list?pageNo=${i}&amount=${s.amount}&keyword=${s.keyword}">${i}</a>
-                    </li>
+                    <c:if test="${maker.page.pageNo != i}">
+                        <li data-page-num="${i}" class="page-item">
+                            <a class="page-link"
+                                href="/board/list?pageNo=${i}&amount=${s.amount}&keyword=${s.keyword}">${i}</a>
+                        </li>
+                    </c:if>
+                    <c:if test="${maker.page.pageNo == i}">
+                        <li data-page-num="${i}" class="page-item hover">
+                            <a class="page-link"
+                                href="/board/list?pageNo=${i}&amount=${s.amount}&keyword=${s.keyword}">${i}</a>
+                        </li>
+                    </c:if>
                 </c:forEach>
 
                 <c:if test="${maker.next}">
@@ -221,19 +253,19 @@
                                 </div>
                             </div>
 
-                            <form id="commentFrm" class="write-reply">
+                            <div id="commentFrm" class="write-reply">
                                 <div class="write-wrapper">
                                     <input name="nickname" class="nickname" value="${login.nickname}" hidden></input>
                                     <input name="email" class="email" value="${login.email}" hidden></input>
-                                    <c:if test="${login != null}">
+                                    <c:if test="${login != ''}">
                                         <input name="content" class="write-input" placeholder="여기는 댓글 입력창입니다."></input>
                                     </c:if>
-                                    <c:if test="${login == null}">
+                                    <c:if test="${login == ''}">
                                         <input name="content" class="write-input" placeholder="여기는 댓글 입력창입니다." readonly></input>
                                     </c:if>
                                     <button class="write-send" type="button">등록</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
 
                     </div>

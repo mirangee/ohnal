@@ -5,10 +5,11 @@ import com.ohnal.chap.common.PageMaker;
 import com.ohnal.chap.common.Search;
 import com.ohnal.chap.dto.request.BoardLikeRequestDTO;
 import com.ohnal.chap.dto.request.BoardReplyDeleteRequestDTO;
+import com.ohnal.chap.dto.request.BoardReplyModifyRequestDTO;
 import com.ohnal.chap.dto.request.BoardWriteRequestDTO;
 import com.ohnal.chap.dto.response.BoardListResponseDTO;
 import com.ohnal.chap.dto.response.BoardReplyResponseDTO;
-import com.ohnal.chap.dto.response.BoardWriteDTO;
+import com.ohnal.chap.dto.BoardWriteDTO;
 import com.ohnal.chap.dto.response.WeatherInfoResponseDTO;
 import com.ohnal.chap.entity.Board;
 import com.ohnal.chap.service.BoardService;
@@ -48,8 +49,8 @@ public class BoardContoller {
         log.info(String.valueOf(page));
         String email = LoginUtils.getCurrentLoginMemberEmail(session);
         log.info("email: {}", email);
+        log.info("pageNo: {}", page.getPageNo());
         List<BoardListResponseDTO> dtoList = boardService.findAll(page, email);
-        log.info(dtoList.toString());
         PageMaker pageMaker = new PageMaker(page, boardService.getCount());
         model.addAttribute("bList", dtoList);
         model.addAttribute("maker", pageMaker);
@@ -74,7 +75,6 @@ public class BoardContoller {
         if (!rootPath.contains("/ootd")) {
             rootPath = rootPath + "/ootd";
         }
-        String nickname = requestDTO.getNickname();
         String content = requestDTO.getContent();
 
         int minTemperature = (int) weatherDTO.getMinTemperature();
@@ -85,7 +85,6 @@ public class BoardContoller {
         String weatherTag = "#최고" + maxTemperature + "최저" + minTemperature;
 
         BoardWriteDTO dto =BoardWriteDTO.builder()
-                .nickname(nickname)
                 .content(content)
                 .locationTag(locationTag)
                 .weatherTag(weatherTag)
@@ -143,7 +142,7 @@ public class BoardContoller {
         return ResponseEntity.ok().body("success");
     }
 
-    // 게시물 자세히 보기
+    // 게시물 삭제
     @GetMapping("/delete/{bno}")
     public void delete(@PathVariable int bno) {
         log.info("delete: {}", bno);
@@ -168,6 +167,7 @@ public class BoardContoller {
 
     }
     
+    // 댓글 삭제
     @DeleteMapping("/reply")
     private ResponseEntity<?> replyDel(@RequestBody BoardReplyDeleteRequestDTO dto) {
         log.info("/board/reply/delete: DELETE, dto: {}", dto);
@@ -183,6 +183,15 @@ public class BoardContoller {
             boardService.deleteReply(rno, bno);
             return ResponseEntity.ok().body("success");
         }
+    }
+    
+    // 댓글 수정
+    @PostMapping("/reply/update")
+    private ResponseEntity<?> replyMod(@RequestBody BoardReplyModifyRequestDTO dto) {
+        log.info("/board/reply/update: POST, dto: {}", dto);
+        boardService.modifyReply(dto);
+        
+        return ResponseEntity.ok().body("success");
     }
 
 }

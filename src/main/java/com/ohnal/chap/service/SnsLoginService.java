@@ -3,7 +3,6 @@ package com.ohnal.chap.service;
 import com.ohnal.chap.dto.request.SignUpRequestDTO;
 import com.ohnal.chap.dto.response.GoogleUserResponseDTO;
 import com.ohnal.chap.dto.response.KakaoUserResponseDTO;
-import com.ohnal.chap.dto.response.LoginUserResponseDTO;
 import com.ohnal.chap.entity.Member;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -148,9 +147,7 @@ public class SnsLoginService {
                 clientSecret,
                 "http://localhost:8282/auth/google");
 
-
         GoogleUserResponseDTO dto = getGoogleUserInfo(accessToken);
-
 
         String email = dto.getEmail();
         log.info("email: {}", email);
