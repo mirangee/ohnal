@@ -12,30 +12,6 @@
 
 <body>
     <%@include file="../include/header.jsp"%>
-    <!-- <div class="snowflakes" aria-hidden="true">
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-    </div> -->
-
-
 
     <div class="back">
         <div class="container">
@@ -49,27 +25,36 @@
                     <input type="password" placeholder="비밀번호를 입력하세요" id="signInPw" name="password" required="required"
                         aria-required="true">
                 </div>
-                <tr>
-                    <td class="autologinbox">
-                        <span>
-                            <i class="fas fa-sign-in-alt"></i>
-                            자동 로그인
-                            <input type="checkbox" id="auto-login" name="autoLogin">
-                        </span>
-                    </td>
-                </tr>
-                <input type="submit" value="로그인">
+                <div class="autologinbox">
+                    <span>
+                        <i class="fas fa-sign-in-alt"></i>
+                        자동 로그인
+                        <input type="checkbox" id="auto-login" name="autoLogin">
+                    </span>
+                </div>
+                <div class="signin-btn">
+                    <input type="submit" value="로그인">
+                </div>
             </form>
-            <a href="/members/sign-up" class="signup-btn">회원가입</a>
+
+            <div>
+                <a href="/members/sign-up" class="signup-btn">회원가입</a>
+            </div>
             <div class="forgot-link">
                 <a href="/sign-in/pwsearch">| 비밀번호 찾기 |</a>
             </div>
-            <a href="/kakao/login" class="kakaologinlogo"><img class="kakaologo" src="/assets/img/kakaologo.png"
-                    alt="카카오톡로그인로고"></a>
-            <a href="/naver/login" class="naverlogobackground"><img id="naverlogo" src="/assets/img/naverlogo.png"
-                    alt="네이버로그인로고"></a>
-            <a href="/google/login" class="googlelogobackground"><img id="googlelogo" src="/assets/img/googlelogo.png"
-                    alt="Google 로그인 로고"></a>
+            <div>
+                <a href="/kakao/login" class="kakaologinlogo"><img class="kakaologo" src="/assets/img/kakaologo.png"
+                                                                   alt="카카오톡로그인로고"></a>
+            </div>
+            <div>
+                <a href="/naver/login" class="naverlogobackground"><img id="naverlogo" src="/assets/img/naverlogo.png"
+                                                                        alt="네이버로그인로고"></a>
+            </div>
+            <div>
+                <a href="/google/login" class="googlelogobackground"><img id="googlelogo" src="/assets/img/googlelogo.png"
+                                                                          alt="Google 로그인 로고"></a>
+            </div>
         </div>
         
         

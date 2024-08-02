@@ -1,46 +1,11 @@
-@font-face {
-  font-family: 'TAEBAEKmilkyway';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/TAEBAEKmilkyway.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
-body header {
-  background: none;
-}
-body footer {
-  background: none;
-}
-body header .inner-header .menu-open .lnr-menu {
-  display: none;
-}
-body{
-  background-image: url(../img/sky-22.gif);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-button {
-  font-weight: 600;
-}
-strong {
-  color: black;
-  font-size:23px;
-}
-
-
 .container {
   margin-top: 120px;
-  font-family:'TAEBAEKmilkyway';
-  /* background: linear-gradient(to left bottom, #fff7d6, pink, #fff7d6); */
-  letter-spacing: 3px;
 }
 
 p.font {
   margin: 10px;
   font-weight: 700;
-  color: white;
 }
-
 
 .inner {
   width: 80%;
@@ -58,17 +23,10 @@ p.font {
   margin-bottom: 10px;
   border-radius: 10px;
   margin-top: 7px;
-  color: black;
-  box-shadow: 2px 2px 5px #8d8383;
-  font-weight: 700;
-
-}
-#sample6_address{
-  margin-bottom: 1px;
 }
 
 .address {
-
+  border: 1px solid lightgray;
   border-radius: 10px;
   margin-top:5px;
 }
@@ -78,101 +36,87 @@ p.font {
 }
 
 .btn_gender {
+  color: black;
   position: relative;
-  left: 29.1%;
+  left: 30%;
+  border-radius: 5px;
   height: 50px;
   width: 100px;
+  border: 1px solid lightgray;
   margin-top: 20px;
-  justify-content: center;
   cursor: pointer;
-  transition: background-color 0.4s;
-  color: black;
-  border: 3px solid white;
-  border-radius:10px;
-  box-shadow:inset 0 0 10px 2px black,0 0 10px 2px black;
-  margin-left: 5px;
+  justify-content: center;
 }
-.btn_gender.m:hover{
-  transition:0.5s;
-  box-shadow:inset 0 0 10px 2px blue,0 0 10px 2px blue;
-}
-.btn_gender.f:hover{
-  transition:0.5s;
-  box-shadow:inset 0 0 10px 2px rgb(234, 19, 253),0 0 10px 2px rgb(226, 82, 195);
-}
-
 
 #emailAuth{
-  font-size: 18px;
+  padding: 5px 15px;
+  background-color: black;
+  color: #12e6fc;
+  font-size: 16px;
+  border:none ;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.4s;
-  color: black;
-  border: 3px solid white;
-  border-radius:10px;
-  box-shadow:inset 0 0 10px 2px black,0 0 10px 2px black;
-  margin-right: 5px;
-  font-weight: 600;
 }
+
 #emailAuth:hover{
-
-  transition:0.5s;
-  box-shadow:inset 0 0 10px 2px green,0 0 10px 2px green;
-
+  background-color: #12e6fc;
+  color: black;
 }
+
 #emailChkInput{
   width:300px;
 }
+
 #btn_submit_button {
   display: flex;
   position: relative;
   top: 30px;
   left: 30%;
-  padding-top: 10px;
-  padding-left: 65px;
+  background-color: black;
+  color: #12e6fc;;
+  padding-top: 14px;
+  padding-left: 62px;
   font-size: 16px;
+  border: none;
+  border-radius: 5px;
   width: 200px;
   height: 50px;
-  margin-bottom:113px;
+  margin-bottom:60px;
   cursor: pointer;
   transition: background-color 0.4s;
-  color: black;
-  border: 3px solid white;
-  border-radius:10px;
-  box-shadow:inset 0 0 10px 2px black,0 0 10px 2px black;
 }
 
 #btn_submit_button:hover {
-  box-shadow:inset 0 0 10px 2px yellow,0 0 10px 2px yellow;
-  transition: 0.5s;
+  background-color: #12e6fc;
+  color: black;
 }
+
 .image_container {
   position: absolute;
   width: 200px;
   height: 250px;
   margin-top: 70px;
   margin-left:40px;
-
 }
+
 .btn_image {
   position: absolute;
   top: 75%;
   display: inline-block;
   padding: 10px 20px;
-  margin-left:35px;
+  margin-left:45px;
+  background-color: black;
+  color: #12e6fc;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.4s;
-  color: black;
-  border: 3px solid white;
-  border-radius:10px;
-  box-shadow:inset 0 0 10px 2px black,0 0 10px 2px black;
-  background-color: f0f0f0;
 
 }
 
 .btn_image:hover {
-  box-shadow:inset 0 0 10px 2px red,0 0 10px 2px red;
-  transition: 0.5s;
+  background-color: #12e6fc;
+  color: black;
 }
 
 .btn_image label {
@@ -188,23 +132,4 @@ p.font {
   object-fit: cover;
   border: 1px solid #ccc;
   overflow: hidden;
-
-}
-
-.addressbtn {
-  cursor: pointer;
-  transition: background-color 0.4s;
-  color: black;
-  border: 3px solid white;
-  border-radius:10px;
-  box-shadow:inset 0 0 10px 2px black,0 0 10px 2px black;
-  font-weight: 600;
-}
-
-.addressbtn:hover {
-  box-shadow:inset 0 0 10px 2px blueviolet,0 0 10px 2px blueviolet;
-  transition: 0.5s;
-}
-.address {
-  font-weight: 700;
 }

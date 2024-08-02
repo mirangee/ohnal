@@ -17,31 +17,29 @@
 
     <form action="/sign-in/pwsearch" name="signup" id="signUpForm" method="post" enctype="multipart/form-data">
 
-        <div class="container">
+        <div class="pw-container">
             <div class="form-group">
-                <p class="font"><strong>이메일 인증 후 비밀번호를 변경해 주십시오</strong>&nbsp;&nbsp;&nbsp;</p>
+                <p class="font"><strong>이메일 인증 후 비밀번호를 변경해 주세요</strong>&nbsp;</p>
                 <input type="email" id="email" name="email" placeholder="ex) on-nal@gmail.com" required="required"
                     aria-required="true" class="input">
-            </div>
-            <div class="form-group">
-                <button type="button" id="button">이메일 인증</button>
-                <input type="text" id="emailChkInput" placeholder="인증번호 6자리를 입력하세요" maxlength="6" disabled> <br>
-                <span id="mailCheckMsg"></span>
-            </div>
-            <div id="message"></div>
-        </div>
-        <div class="pwFind container">
-            <div class="newPwInput">
-                <p class="font"><strong>새로 설정하실 비밀번호를 입력해주세요</strong>&nbsp;&nbsp;&nbsp;</p>
-                <input type="password" placeholder="영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요" id="newPw" name="password" required="required"
-                    aria-required="true" readonly>
-                <span id="pwChk"></span>
-            </div>
-            <div class="newPwChkInput">
-                <p class="font"><strong>입력하신 비밀번호를 재확인해주세요</strong>&nbsp;&nbsp;&nbsp;</p>
-                <input type="password" placeholder="입력하신 비밀번호와 동일하게 입력해주세요" id="newPwChk"
-                    required="required" aria-required="true" readonly>
-                <span id="pwChk2"></span>
+                    <div class="email-check-container">
+                        <button type="button" id="button">이메일 인증</button>
+                        <input type="text" id="emailChkInput" placeholder="인증번호 6자리를 입력하세요" maxlength="6" disabled> <br>
+                        <span id="mailCheckMsg"></span>
+                        <div id="message"></div>
+                    </div>
+                <div class="newPwInput">
+                    <p class="font"><strong>새 비밀번호를 입력해 주세요</strong>&nbsp;&nbsp;&nbsp;</p>
+                    <input type="password" placeholder="영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요" id="newPw" name="password" required="required"
+                        aria-required="true" readonly>
+                    <span id="pwChk"></span>
+                </div>
+                <div class="newPwChkInput">
+                    <p class="font"><strong>비밀번호를 재확인해 주세요</strong>&nbsp;&nbsp;&nbsp;</p>
+                    <input type="password" placeholder="입력하신 비밀번호와 동일하게 입력해주세요" id="newPwChk"
+                        required="required" aria-required="true" readonly>
+                    <span id="pwChk2"></span>
+                </div>
             </div>
         </div>
 

@@ -13,28 +13,6 @@
 <body>
     <%@include file="../include/header.jsp"%>
 
-    <div class="snowflakes" aria-hidden="true">
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-    </div>
     <!-- BEST OOTD 게시판 영역 -->
 
         <div class="top-wrapper">
@@ -66,7 +44,8 @@
                             <img src="${b.profileImage}" alt="프사">
                         </div>
                         <span class="card-account">${b.nickname}</span>
-                        <c:if test="${login.email == b.email || login.auth == 'ADMIN'}"><button class="board-del-btn" type="button">삭제</button>
+                        <c:if test="${login.email == b.email || login.auth == 'ADMIN'}">
+                            <button class="board-del-btn" type="button">삭제</button>
                         </c:if>
                     </div>
 

@@ -33,7 +33,6 @@
         </div>
 
         <button type="button" id="pwChange">비밀번호 변경</button>
-
     </form>
 
     <%@include file="../include/footer.jsp"%>

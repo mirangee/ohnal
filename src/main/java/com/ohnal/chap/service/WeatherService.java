@@ -226,11 +226,6 @@ public class WeatherService {
     }
 
     private String mapClothes(double tmx, double tmn) {
-        // 일교차가 10 이상이면 따로 구성 필요
-//        double temparatureDiff = tmx - tmn;
-//        log.info("일교차: {}", temparatureDiff);
-
-        String clothesInfo = ""; // 옷 정보 담는 변수
         String clothesCode = ""; // 코드 번호 담는 변수
 
         // 평균 기온 구해서 반올림 적용

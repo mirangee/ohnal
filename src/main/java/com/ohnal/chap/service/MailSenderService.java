@@ -37,11 +37,10 @@ public class MailSenderService {
                 "인증 번호를 인증번호 확인란에 기입해 주세요.";
 
         log.info("인증번호: {}",authNum);
-
-
         mailSend(setFrom,toMail,title,content);
         return Integer.toString(authNum);
     }
+
     public String pwEmail(String email){
         int authNum= makeRandomNumber();
 
@@ -53,8 +52,6 @@ public class MailSenderService {
                 "인증 번호는 <strong>"+authNum+"</strong>입니다."+
                         "<br>"+
                 "인증 번호를 인증번호 확인란에 기입해 주세요.";
-        
-        
 
         mailSend(setFrom,toMail,title,content);
         return Integer.toString(authNum);

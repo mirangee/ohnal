@@ -413,9 +413,6 @@ function renderReplies(replyList) {
   if (replyList !== null && replyList.length > 0) {
 
     for (let reply of replyList) {
-
-      // console.log(reply);
-
       const {
         replyNo,
         email,
@@ -441,14 +438,11 @@ function renderReplies(replyList) {
           </div>
         </div>
       `;
-
     }
-
   } else {
     tag += "<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>";
   }
   $replyWrapper.innerHTML = tag;
-
 }
 
 
