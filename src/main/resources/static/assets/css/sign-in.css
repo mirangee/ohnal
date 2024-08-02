@@ -1,0 +1,120 @@
+.container {
+    display: grid;
+    place-items: center;
+    width: 500px;
+    height: 600px;
+    margin: 200px auto 100px;
+
+}
+
+.logintextlogin{
+    margin: 0 auto;
+    padding-bottom: 5px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-group input {
+    all: unset;
+    box-sizing: border-box;
+}
+
+.autologinbox {
+    pointer:cursor;
+}
+
+.signin-btn {
+    display: block;
+    background-color: black;
+    color: #12e6fc;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 300px;
+    margin-top: 10px;
+}
+
+.signin-btn input {
+    all: unset;
+    box-sizing: border-box;
+}
+
+.signin-btn:hover {
+    background-color: #002254;
+}
+
+.forgot-link {
+    text-align: center;
+    font-weight: bolder;
+}
+
+.signup-btn {
+    display: block;
+    background-color: black;
+    color: #12e6fc;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+.signup-btn:hover {
+    background-color: #002254;
+}
+
+.kakaologinlogo {
+    display: block;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #FEE500;
+    width: 300px;
+    height: 45px;
+}
+
+
+#naverlogo {
+    height: 51px;
+    vertical-align: middle;
+    width: 192px;
+}
+
+.naverlogobackground {
+    background-color: #03c75a;
+    text-align:center;
+    display: block;
+    width: 300px;
+    border-radius: 5px;
+    height:51px;
+}
+
+
+
+#googlelogo {
+    display: block;
+    text-align: center;
+    border-radius: 5px;
+    width: 300px;
+    height: 45px;
+}
+
+.googlelogobackground {
+    background-color: #ffffff;
+    text-align: center;
+    display: block;
+    width: 300px;
+    border-radius: 5px;
+    height: 51px;
+}
